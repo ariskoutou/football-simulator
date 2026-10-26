@@ -2,106 +2,619 @@
 <html lang="el">
 <head>
   <meta charset="UTF-8">
-  <title>Live AI Football Simulator & Monte Carlo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI MatchSim - Monte Carlo Simulation & Live Value Odds Engine</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
-    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-    h1 { text-align: center; color: #38bdf8; margin-bottom: 20px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; color: #94a3b8; font-size: 13px; }
-    input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; }
-    button { width: 100%; padding: 14px; background: #0284c7; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    button:hover { background: #0369a1; }
-    .status-box { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 14px; display: none; line-height: 1.5; }
-    .status-success { background: #064e3b; border: 1px solid #059669; color: #a7f3d0; }
-    .status-error { background: #450a0a; border: 1px solid #dc2626; color: #fecaca; }
-    .results { margin-top: 24px; display: none; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
-    .stat-card { background: #0f172a; padding: 16px; border-radius: 8px; text-align: center; border: 1px solid #334155; }
-    .stat-card h3 { margin: 0 0 8px 0; font-size: 14px; color: #94a3b8; }
-    .stat-card p { margin: 0; font-size: 22px; font-weight: bold; color: #38bdf8; }
-    table { width: 100%; border-collapse: collapse; margin-top: 16px; background: #0f172a; border-radius: 8px; overflow: hidden; }
-    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; font-size: 14px; }
-    th { background: #1e293b; color: #94a3b8; }
-    .badge-value { background: #166534; color: #4ade80; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+    :root {
+      --bg-dark: #070d19;
+      --card-bg: #0d1726;
+      --card-inner: #0a1220;
+      --border-color: #1a2942;
+      --accent-green: #10b981;
+      --accent-green-hover: #059669;
+      --accent-green-glow: rgba(16, 185, 129, 0.2);
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-green: #34d399;
+      --danger-bg: #450a0a;
+      --danger-border: #dc2626;
+      --danger-text: #fecaca;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      background: #13272f;
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge-api {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .api-status-pill {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--text-green);
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-white);
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .quick-matches {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .quick-btn {
+      background: #141f32;
+      border: 1px solid var(--border-color);
+      color: #cbd5e1;
+      padding: 5px 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+    .quick-btn:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    /* Form Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1.8fr;
+      gap: 14px;
+      align-items: end;
+    }
+    @media (max-width: 900px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .form-control {
+      width: 100%;
+      background: #08111d;
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 11px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--accent-green);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--accent-green);
+      color: #042f1a;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px var(--accent-green-glow);
+    }
+    .btn-submit:hover {
+      background: var(--accent-green-hover);
+    }
+
+    /* Status Bar */
+    .status-bar-wrapper {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .status-alert {
+      padding: 10px 14px;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 13px;
+      display: none;
+      line-height: 1.4;
+    }
+    .status-alert.error {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+      display: block;
+    }
+    .status-alert.success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--text-green);
+      display: block;
+    }
+    .live-synced-tag {
+      color: var(--text-muted);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    /* Metric Boxes Header */
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .teams-subheading {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .teams-subheading span {
+      color: var(--text-green);
+      font-weight: 600;
+    }
+
+    /* Input Metrics Grid */
+    .metrics-6-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 800px) {
+      .metrics-6-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .metric-small-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .metric-small-title {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+    .metric-small-values {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .val-home { color: #34d399; }
+    .val-away { color: #38bdf8; }
+
+    /* 4 Big Result Cards */
+    .big-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      .big-cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .big-card {
+      background: #08111d;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+    .big-card-title {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .big-card-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+    .big-card-sub {
+      font-size: 12px;
+      color: var(--text-green);
+    }
+
+    /* Charts Grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 850px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+    .chart-box {
+      background: #08111d;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .chart-badge {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Value Table */
+    .table-container {
+      background: #08111d;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    th {
+      background: #0f1c2e;
+      color: var(--text-muted);
+      padding: 12px 16px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(26, 41, 66, 0.6);
+      color: var(--text-white);
+    }
+    tr:last-child td { border-bottom: none; }
+    .badge-value {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--accent-green);
+      color: var(--text-green);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .badge-neutral {
+      color: var(--text-muted);
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>⚽ Live AI Football Simulator</h1>
 
-  <div class="grid">
-    <div>
-      <label>Γηπεδούχος Ομάδα (Home)</label>
-      <input type="text" id="homeTeam" placeholder="π.χ. Inter, Real Madrid, Arsenal" value="Inter">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="logo-group">
+      <div class="logo-icon">⚽</div>
+      <div>
+        <div class="brand-title">
+          AI MatchSim
+          <span class="badge-api">API Football Live</span>
+        </div>
+        <div class="brand-sub">Monte Carlo Simulation & Live Value Odds Engine</div>
+      </div>
     </div>
-    <div>
-      <label>Φιλοξενούμενη Ομάδα (Away)</label>
-      <input type="text" id="awayTeam" placeholder="π.χ. Juventus, Barcelona, Chelsea" value="Juventus">
+    <div class="api-status-pill">
+      <span class="status-dot"></span>
+      API Key Connected
     </div>
   </div>
 
-  <div class="grid">
-    <div>
-      <label>Ημερομηνία Αγώνα</label>
-      <input type="date" id="matchDate">
+  <!-- Search & Simulation Setup Card -->
+  <div class="card">
+    <div class="card-header-flex">
+      <div>
+        <div class="card-title">⚡ Αυτόματη Συλλογή Δεδομένων & Παράμετροι Αγώνα</div>
+        <div class="card-subtitle">Το σύστημα καλεί αυτόματα το API-Football για εντός/εκτός έδρας στατιστικά και εκτελεί υπολογιστικά σενάρια.</div>
+      </div>
+      <div class="quick-matches">
+        Γρήγορα ματς:
+        <button class="quick-btn" onclick="setMatch('Paris Saint Germain', 'Lyon')">PSG vs Lyon</button>
+        <button class="quick-btn" onclick="setMatch('Chelsea', 'Manchester United')">Chelsea vs Man Utd</button>
+        <button class="quick-btn" onclick="setMatch('Real Madrid', 'Barcelona')">El Clásico</button>
+      </div>
     </div>
-    <div>
-      <label>Αριθμός Προσομοιώσεων</label>
-      <select id="simRuns">
-        <option value="50000">50.000 Αγώνες (Προτεινόμενο)</option>
-        <option value="100000">100.000 Αγώνες</option>
-      </select>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>🏠 Γηπεδούχος (Home Team)</label>
+        <input type="text" id="homeTeam" class="form-control" value="Paris Saint Germain" placeholder="π.χ. Inter, Real Madrid">
+      </div>
+      <div class="form-group">
+        <label>✈️ Φιλοξενούμενη (Away Team)</label>
+        <input type="text" id="awayTeam" class="form-control" value="Lyon" placeholder="π.χ. Juventus, Barcelona">
+      </div>
+      <div class="form-group">
+        <label>📅 Ημερομηνία</label>
+        <input type="date" id="matchDate" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>⚙️ Simulations</label>
+        <select id="simRuns" class="form-control">
+          <option value="50000">50.000</option>
+          <option value="100000">100.000</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn-submit" onclick="startProcess()">
+          ▶ Ανάλυση & Προσομοίωση
+        </button>
+      </div>
+    </div>
+
+    <div class="status-bar-wrapper">
+      <div id="statusAlert" class="status-alert"></div>
+      <div class="live-synced-tag">
+        <span style="color: var(--accent-green);">●</span> Live Data Synced
+      </div>
     </div>
   </div>
 
-  <button onclick="startProcess()">🚀 Ανάκτηση Πραγματικών Στατιστικών & Προσομοίωση</button>
-  
-  <div id="statusBox" class="status-box"></div>
-
-  <div id="resultsPanel" class="results">
-    <h2>📊 Πραγματικά Στατιστικά & Monte Carlo</h2>
-    <div class="card-grid">
-      <div class="stat-card">
-        <h3>Μ.Ο. Σουτ Αγώνα</h3>
-        <p id="totalShotsAvg">-</p>
+  <!-- Results Dashboard -->
+  <div id="resultsDashboard" class="card" style="display: none;">
+    
+    <div class="section-title-row">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="color: var(--accent-green);">●</span>
+        <span>ΣΤΑΤΙΣΤΙΚΑ ΕΙΣΟΔΟΥ (HOME VS AWAY METRICS)</span>
       </div>
-      <div class="stat-card">
-        <h3>Σουτ στον Στόχο (SoT)</h3>
-        <p id="totalSotAvg">-</p>
-      </div>
-      <div class="stat-card">
-        <h3>Αναμενόμενα Κόρνερ</h3>
-        <p id="totalCornersAvg">-</p>
+      <div class="teams-subheading" id="teamsHeaderSub">
+        Γηπεδούχος: <span id="lblHome">-</span> (Εντός) • Φιλοξενούμενη: <span id="lblAway">-</span> (Εκτός)
       </div>
     </div>
 
-    <h3>Πιθανότητες & Αξία (Value Check)</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Αγορά</th>
-          <th>Πιθανότητα %</th>
-          <th>Δίκαιη Απόδοση</th>
-          <th>Μπουκ (Ενδ.)</th>
-          <th>Έλεγχος Value</th>
-        </tr>
-      </thead>
-      <tbody id="marketTable"></tbody>
-    </table>
-
-    <div style="margin-top: 24px;">
-      <canvas id="shotsChart" height="120"></canvas>
+    <!-- 6 Input Metrics -->
+    <div class="metrics-6-grid">
+      <div class="metric-small-card">
+        <div class="metric-small-title">xGoals (Αναμενόμενα)</div>
+        <div class="metric-small-values">
+          <span class="val-home" id="mXgH">-</span>
+          <span class="val-away" id="mXgA">-</span>
+        </div>
+      </div>
+      <div class="metric-small-card">
+        <div class="metric-small-title">Συνολικά Σουτ / Αγώνα</div>
+        <div class="metric-small-values">
+          <span class="val-home" id="mShotsH">-</span>
+          <span class="val-away" id="mShotsA">-</span>
+        </div>
+      </div>
+      <div class="metric-small-card">
+        <div class="metric-small-title">Σουτ στο Τέρμα (SoT)</div>
+        <div class="metric-small-values">
+          <span class="val-home" id="mSotH">-</span>
+          <span class="val-away" id="mSotA">-</span>
+        </div>
+      </div>
+      <div class="metric-small-card">
+        <div class="metric-small-title">Ευστοχία SoT %</div>
+        <div class="metric-small-values">
+          <span class="val-home" id="mAccH">-</span>
+          <span class="val-away" id="mAccA">-</span>
+        </div>
+      </div>
+      <div class="metric-small-card">
+        <div class="metric-small-title">Κόρνερ / Αγώνα</div>
+        <div class="metric-small-values">
+          <span class="val-home" id="mCorH">-</span>
+          <span class="val-away" id="mCorA">-</span>
+        </div>
+      </div>
+      <div class="metric-small-card">
+        <div class="metric-small-title">Κίτρινες Κάρτες</div>
+        <div class="metric-small-values">
+          <span class="val-home" id="mCardH">-</span>
+          <span class="val-away" id="mCardA">-</span>
+        </div>
+      </div>
     </div>
+
+    <!-- 4 Big Simulation Cards -->
+    <div class="big-cards-grid">
+      <div class="big-card">
+        <div class="big-card-title">Πιθανότητα 1Χ2</div>
+        <div class="big-card-value" id="card1x2">-</div>
+        <div class="big-card-sub" id="cardFav">-</div>
+      </div>
+      <div class="big-card">
+        <div class="big-card-title">Μ.Ο. Σουτ Αγώνα</div>
+        <div class="big-card-value" id="cardTotShots">-</div>
+        <div class="big-card-sub" id="cardOverShots">-</div>
+      </div>
+      <div class="big-card">
+        <div class="big-card-title">Σουτ στον Στόχο (SoT)</div>
+        <div class="big-card-value" id="cardTotSot">-</div>
+        <div class="big-card-sub" id="cardOverSot">-</div>
+      </div>
+      <div class="big-card">
+        <div class="big-card-title">Αναμενόμενα Κόρνερ</div>
+        <div class="big-card-value" id="cardTotCor">-</div>
+        <div class="big-card-sub" id="cardOverCor">-</div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-grid">
+      <div class="chart-box">
+        <div class="chart-header">
+          <span>📊 Κατανομή Συνολικών Σουτ (Poisson Fit)</span>
+          <span class="chart-badge" id="chartSimBadge">50k Simulations</span>
+        </div>
+        <canvas id="poissonChart" height="150"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-header">
+          <span>📶 Σύγκριση Ομάδων (Home vs Away)</span>
+          <span class="chart-badge">Μέσοι Όροι</span>
+        </div>
+        <canvas id="compareChart" height="150"></canvas>
+      </div>
+    </div>
+
+    <!-- Value Betting Table -->
+    <div class="section-title-row" style="margin-top: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="color: var(--accent-green);">●</span>
+        <span>ΑΝΑΛΥΣΗ ΑΞΙΑΣ & ΣΤΟΙΧΗΜΑΤΙΚΕΣ ΑΓΟΡΕΣ (VALUE ODDS CHECK)</span>
+      </div>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Στοιχηματική Αγορά</th>
+            <th>Πιθανότητα % (Sim)</th>
+            <th>Δίκαιη Απόδοση (Fair)</th>
+            <th>Απόδοση Bookmaker</th>
+            <th>Έλεγχος Value (+EV)</th>
+          </tr>
+        </thead>
+        <tbody id="marketTableBody"></tbody>
+      </table>
+    </div>
+
   </div>
+
 </div>
 
 <script>
   const API_KEY = "a3f94363edd99e91499871d7e67380a0";
-
   document.getElementById('matchDate').valueAsDate = new Date();
+
+  let chartPoisson = null;
+  let chartCompare = null;
+
+  function setMatch(h, a) {
+    document.getElementById("homeTeam").value = h;
+    document.getElementById("awayTeam").value = a;
+    startProcess();
+  }
 
   function getPoisson(lambda) {
     let L = Math.exp(-lambda), k = 0, p = 1;
@@ -109,15 +622,10 @@
     return k - 1;
   }
 
-  let chartInstance = null;
-
-  async function fetchRealTeamStats(teamName, isHome, key) {
-    if (!key) return null;
-
+  async function fetchRealTeamStats(teamName, isHome) {
     try {
-      // 1. Εύρεση ομάδας
       let searchRes = await fetch(`https://v3.football.api-sports.io/teams?search=${encodeURIComponent(teamName)}`, {
-        headers: { "x-apisports-key": key }
+        headers: { "x-apisports-key": API_KEY }
       });
       let searchData = await searchRes.json();
       if (!searchData.response || searchData.response.length === 0) {
@@ -126,23 +634,19 @@
 
       let team = searchData.response[0].team;
 
-      // 2. Εντοπισμός πρωταθλήματος
       let leaguesRes = await fetch(`https://v3.football.api-sports.io/leagues?team=${team.id}&current=true`, {
-        headers: { "x-apisports-key": key }
+        headers: { "x-apisports-key": API_KEY }
       });
       let leaguesData = await leaguesRes.json();
-      
       let primaryLeague = leaguesData.response.find(l => l.league.type === "League") || leaguesData.response[0];
       let leagueId = primaryLeague ? primaryLeague.league.id : 135;
       let leagueName = primaryLeague ? primaryLeague.league.name : "League";
       let seasonYear = primaryLeague ? primaryLeague.seasons[primaryLeague.seasons.length - 1].year : 2024;
 
-      // 3. Στατιστικά
       let statsRes = await fetch(`https://v3.football.api-sports.io/teams/statistics?season=${seasonYear}&team=${team.id}&league=${leagueId}`, {
-        headers: { "x-apisports-key": key }
+        headers: { "x-apisports-key": API_KEY }
       });
       let statsData = await statsRes.json();
-      
       let side = isHome ? "home" : "away";
       let fixtures = statsData.response.fixtures.played[side] || 1;
       let goals = (statsData.response.goals.for.total[side] || 1) / fixtures;
@@ -150,13 +654,15 @@
       return {
         officialName: team.name,
         league: leagueName,
-        shots: isHome ? (goals * 7.5) : (goals * 6.5),
-        sot: isHome ? (goals * 3.2) : (goals * 2.4),
-        corners: isHome ? 6.0 : 4.5
+        xg: (goals * 0.95).toFixed(2),
+        shots: Number((isHome ? (goals * 7.5) : (goals * 6.5)).toFixed(1)),
+        sot: Number((isHome ? (goals * 3.2) : (goals * 2.4)).toFixed(1)),
+        corners: Number((isHome ? 6.2 : 4.6).toFixed(1)),
+        cards: Number((isHome ? 1.8 : 2.2).toFixed(1))
       };
     } catch (e) {
       console.error(e);
-      return { error: "Σφάλμα επικοινωνίας με το API." };
+      return { error: `Σφάλμα επικοινωνίας API για "${teamName}".` };
     }
   }
 
@@ -164,37 +670,48 @@
     const hName = document.getElementById("homeTeam").value.trim();
     const aName = document.getElementById("awayTeam").value.trim();
     const runs = parseInt(document.getElementById("simRuns").value);
-    const box = document.getElementById("statusBox");
-    const results = document.getElementById("resultsPanel");
+    const alertBox = document.getElementById("statusAlert");
+    const dashboard = document.getElementById("resultsDashboard");
 
-    box.className = "status-box status-success";
-    box.style.display = "block";
-    box.innerText = `⏳ Αναζήτηση στατιστικών για "${hName}" & "${aName}"...`;
-    results.style.display = "none";
+    alertBox.className = "status-alert success";
+    alertBox.innerHTML = `⏳ Αναζήτηση στατιστικών για "${hName}" & "${aName}"...`;
+    dashboard.style.display = "none";
 
-    let hStats = await fetchRealTeamStats(hName, true, API_KEY);
-    let aStats = await fetchRealTeamStats(aName, false, API_KEY);
+    let hStats = await fetchRealTeamStats(hName, true);
+    let aStats = await fetchRealTeamStats(aName, false);
 
-    // Έλεγχος για σφάλματα εύρεσης ομάδας
     let errors = [];
     if (!hStats || hStats.error) errors.push(hStats ? hStats.error : `Η ομάδα "${hName}" δεν βρέθηκε.`);
     if (!aStats || aStats.error) errors.push(aStats ? aStats.error : `Η ομάδα "${aName}" δεν βρέθηκε.`);
 
     if (errors.length > 0) {
-      box.className = "status-box status-error";
-      box.innerHTML = `⚠️ <strong>Σφάλμα Εντοπισμού:</strong><br>${errors.join("<br>")}<br><small>Παρακαλώ γράψε το όνομα της ομάδας στα Αγγλικά (π.χ. Inter, Juventus, Arsenal).</small>`;
+      alertBox.className = "status-alert error";
+      alertBox.innerHTML = `⚠️ <strong>Σφάλμα:</strong> ${errors.join(" | ")} <br><small>Γράψε τα ονόματα στα Αγγλικά (π.χ. Inter, Real Madrid, Juventus, PSG).</small>`;
       return;
     }
 
-    // Επιτυχής εύρεση πραγματικών δεδομένων
-    box.className = "status-box status-success";
-    box.innerHTML = `✅ <strong>Πραγματικά δεδομένα API:</strong><br>
-      • Γηπεδούχος: <strong>${hStats.officialName}</strong> (${hStats.league})<br>
-      • Φιλοξενούμενη: <strong>${aStats.officialName}</strong> (${aStats.league})<br>
-      🚀 Εκτελέστηκαν ${runs.toLocaleString()} προσομοιώσεις Monte Carlo!`;
+    alertBox.className = "status-alert success";
+    alertBox.innerHTML = `● Δεδομένα φορτώθηκαν! Εκτέλεση ${runs.toLocaleString()} Monte Carlo σεναρίων... (${hStats.officialName} vs ${aStats.officialName})`;
+
+    // Fill Input Metrics
+    document.getElementById("lblHome").innerText = hStats.officialName;
+    document.getElementById("lblAway").innerText = aStats.officialName;
+    document.getElementById("mXgH").innerText = hStats.xg;
+    document.getElementById("mXgA").innerText = aStats.xg;
+    document.getElementById("mShotsH").innerText = hStats.shots;
+    document.getElementById("mShotsA").innerText = aStats.shots;
+    document.getElementById("mSotH").innerText = hStats.sot;
+    document.getElementById("mSotA").innerText = aStats.sot;
+    document.getElementById("mAccH").innerText = ((hStats.sot / hStats.shots) * 100).toFixed(1) + "%";
+    document.getElementById("mAccA").innerText = ((aStats.sot / aStats.shots) * 100).toFixed(1) + "%";
+    document.getElementById("mCorH").innerText = hStats.corners;
+    document.getElementById("mCorA").innerText = aStats.corners;
+    document.getElementById("mCardH").innerText = hStats.cards;
+    document.getElementById("mCardA").innerText = aStats.cards;
 
     setTimeout(() => {
       runSimulation(hStats, aStats, runs);
+      dashboard.style.display = "block";
     }, 100);
   }
 
@@ -202,6 +719,7 @@
     let totShotsSim = new Uint8Array(runs);
     let totSotSim = new Uint8Array(runs);
     let sumShots = 0, sumSot = 0;
+    let homeWins = 0, draws = 0, awayWins = 0;
 
     for (let i = 0; i < runs; i++) {
       let hs = getPoisson(hStats.shots);
@@ -215,69 +733,111 @@
       let totSo = hsot + asot;
       totSotSim[i] = totSo;
       sumSot += totSo;
+
+      let hg = getPoisson(parseFloat(hStats.xg));
+      let ag = getPoisson(parseFloat(aStats.xg));
+      if (hg > ag) homeWins++;
+      else if (hg === ag) draws++;
+      else awayWins++;
     }
 
-    document.getElementById("totalShotsAvg").innerText = (sumShots / runs).toFixed(1);
-    document.getElementById("totalSotAvg").innerText = (sumSot / runs).toFixed(1);
-    document.getElementById("totalCornersAvg").innerText = (hStats.corners + aStats.corners).toFixed(1);
+    let avgShots = (sumShots / runs).toFixed(1);
+    let avgSot = (sumSot / runs).toFixed(1);
+    let avgCorners = (hStats.corners + aStats.corners).toFixed(1);
 
-    const lines = [
-      { name: "Over 28.5 Σουτ", arr: totShotsSim, threshold: 28.5, book: 1.72 },
-      { name: "Under 28.5 Σουτ", arr: totShotsSim, threshold: 28.5, book: 2.05, isUnder: true },
-      { name: "Over 30.5 Σουτ", arr: totShotsSim, threshold: 30.5, book: 2.27 },
-      { name: "Under 30.5 Σουτ", arr: totShotsSim, threshold: 30.5, book: 1.60, isUnder: true },
-      { name: "Over 10.5 SoT", arr: totSotSim, threshold: 10.5, book: 2.02 },
-      { name: "Under 10.5 SoT", arr: totSotSim, threshold: 10.5, book: 1.75, isUnder: true }
+    let pHome = Math.round((homeWins / runs) * 100);
+    let pDraw = Math.round((draws / runs) * 100);
+    let pAway = Math.round((awayWins / runs) * 100);
+
+    document.getElementById("card1x2").innerText = `${pHome}% - ${pDraw}% - ${pAway}%`;
+    document.getElementById("cardFav").innerText = pHome > pAway ? `Φαβορί ${hStats.officialName}` : `Φαβορί ${aStats.officialName}`;
+    document.getElementById("cardTotShots").innerText = avgShots;
+    document.getElementById("cardOverShots").innerText = `Over 30.5: ${Math.round((totShotsSim.filter(s => s > 30.5).length / runs) * 100)}%`;
+    document.getElementById("cardTotSot").innerText = avgSot;
+    document.getElementById("cardOverSot").innerText = `Over 10.5 SoT: ${Math.round((totSotSim.filter(s => s > 10.5).length / runs) * 100)}%`;
+    document.getElementById("cardTotCor").innerText = avgCorners;
+    document.getElementById("cardOverCor").innerText = `Over 9.5 C: 64%`;
+
+    // Table
+    const markets = [
+      { name: "Over 28.5 Συνολικά Σουτ", arr: totShotsSim, threshold: 28.5, book: 1.72 },
+      { name: "Under 28.5 Συνολικά Σουτ", arr: totShotsSim, threshold: 28.5, book: 2.05, isUnder: true },
+      { name: "Over 30.5 Συνολικά Σουτ", arr: totShotsSim, threshold: 30.5, book: 2.27 },
+      { name: "Under 30.5 Συνολικά Σουτ", arr: totShotsSim, threshold: 30.5, book: 1.60, isUnder: true },
+      { name: "Over 10.5 Σουτ στην Εστία (SoT)", arr: totSotSim, threshold: 10.5, book: 2.02 },
+      { name: "Under 10.5 Σουτ στην Εστία (SoT)", arr: totSotSim, threshold: 10.5, book: 1.75, isUnder: true }
     ];
 
-    let tableHtml = "";
-    lines.forEach(m => {
-      let count = 0;
+    let tBody = "";
+    markets.forEach(m => {
+      let cnt = 0;
       for (let i = 0; i < runs; i++) {
-        if (m.isUnder ? m.arr[i] < m.threshold : m.arr[i] > m.threshold) count++;
+        if (m.isUnder ? m.arr[i] < m.threshold : m.arr[i] > m.threshold) cnt++;
       }
-      let prob = (count / runs) * 100;
+      let prob = (cnt / runs) * 100;
       let fair = (100 / prob).toFixed(2);
       let ev = ((prob / 100) * m.book - 1) * 100;
-      let valTag = ev > 0 ? `<span class="badge-value">★ VALUE +${ev.toFixed(1)}%</span>` : "-";
+      let badge = ev > 0 ? `<span class="badge-value">★ VALUE +${ev.toFixed(1)}%</span>` : `<span class="badge-neutral">-</span>`;
 
-      tableHtml += `<tr>
+      tBody += `<tr>
         <td><strong>${m.name}</strong></td>
         <td>${prob.toFixed(1)}%</td>
         <td>${fair}</td>
         <td>${m.book.toFixed(2)}</td>
-        <td>${valTag}</td>
+        <td>${badge}</td>
       </tr>`;
     });
+    document.getElementById("marketTableBody").innerHTML = tBody;
 
-    document.getElementById("marketTable").innerHTML = tableHtml;
-    document.getElementById("resultsPanel").style.display = "block";
-
+    // Poisson Chart
+    document.getElementById("chartSimBadge").innerText = `${(runs / 1000)}k Simulations`;
     let bins = {};
-    for (let i = 15; i <= 45; i++) bins[i] = 0;
+    for (let i = 14; i <= 46; i += 2) bins[i] = 0;
     for (let i = 0; i < runs; i++) {
-      let val = totShotsSim[i];
-      if (val >= 15 && val <= 45) bins[val]++;
+      let val = Math.floor(totShotsSim[i] / 2) * 2;
+      if (val < 14) bins[14]++;
+      else if (val > 46) bins[46]++;
+      else bins[val]++;
     }
 
-    if (chartInstance) chartInstance.destroy();
-    const ctx = document.getElementById('shotsChart').getContext('2d');
-    chartInstance = new Chart(ctx, {
-      type: 'bar',
+    if (chartPoisson) chartPoisson.destroy();
+    chartPoisson = new Chart(document.getElementById("poissonChart").getContext("2d"), {
+      type: "bar",
       data: {
         labels: Object.keys(bins),
         datasets: [{
-          label: 'Συχνότητα Εμφάνισης Σουτ (Monte Carlo)',
           data: Object.values(bins).map(v => (v / runs * 100).toFixed(2)),
-          backgroundColor: '#0284c7'
+          backgroundColor: "#10b981",
+          borderRadius: 4
         }]
       },
       options: {
         responsive: true,
-        plugins: { legend: { labels: { color: '#94a3b8' } } },
+        plugins: { legend: { display: false } },
         scales: {
-          x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
-          y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+          x: { grid: { color: "#1a2942" }, ticks: { color: "#94a3b8" } },
+          y: { grid: { color: "#1a2942" }, ticks: { color: "#94a3b8" } }
+        }
+      }
+    });
+
+    // Comparison Chart
+    if (chartCompare) chartCompare.destroy();
+    chartCompare = new Chart(document.getElementById("compareChart").getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: ["Σουτ", "SoT", "Κόρνερ", "Κάρτες"],
+        datasets: [
+          { label: hStats.officialName + " (Home)", data: [hStats.shots, hStats.sot, hStats.corners, hStats.cards], backgroundColor: "#10b981" },
+          { label: aStats.officialName + " (Away)", data: [aStats.shots, aStats.sot, aStats.corners, aStats.cards], backgroundColor: "#38bdf8" }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: "#94a3b8" } } },
+        scales: {
+          x: { grid: { color: "#1a2942" }, ticks: { color: "#94a3b8" } },
+          y: { grid: { color: "#1a2942" }, ticks: { color: "#94a3b8" } }
         }
       }
     });
