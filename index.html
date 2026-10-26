@@ -11,10 +11,11 @@
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     label { display: block; font-weight: 600; margin-bottom: 6px; color: #94a3b8; font-size: 13px; }
     input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; }
-    .api-box { background: #172554; border: 1px solid #1e40af; padding: 12px; border-radius: 8px; margin-bottom: 20px; display: none; }
     button { width: 100%; padding: 14px; background: #0284c7; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
     button:hover { background: #0369a1; }
-    .status { text-align: center; margin-top: 10px; color: #38bdf8; font-size: 14px; font-style: italic; }
+    .status-box { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 14px; display: none; line-height: 1.5; }
+    .status-success { background: #064e3b; border: 1px solid #059669; color: #a7f3d0; }
+    .status-error { background: #450a0a; border: 1px solid #dc2626; color: #fecaca; }
     .results { margin-top: 24px; display: none; }
     .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
     .stat-card { background: #0f172a; padding: 16px; border-radius: 8px; text-align: center; border: 1px solid #334155; }
@@ -57,7 +58,8 @@
   </div>
 
   <button onclick="startProcess()">🚀 Ανάκτηση Πραγματικών Στατιστικών & Προσομοίωση</button>
-  <div id="statusMsg" class="status"></div>
+  
+  <div id="statusBox" class="status-box"></div>
 
   <div id="resultsPanel" class="results">
     <h2>📊 Πραγματικά Στατιστικά & Monte Carlo</h2>
@@ -97,7 +99,6 @@
 </div>
 
 <script>
-  // Το δικό σου API Key περασμένο μόνιμα
   const API_KEY = "a3f94363edd99e91499871d7e67380a0";
 
   document.getElementById('matchDate').valueAsDate = new Date();
@@ -114,27 +115,30 @@
     if (!key) return null;
 
     try {
-      // 1. Βρες το ID της ομάδας
+      // 1. Εύρεση ομάδας
       let searchRes = await fetch(`https://v3.football.api-sports.io/teams?search=${encodeURIComponent(teamName)}`, {
         headers: { "x-apisports-key": key }
       });
       let searchData = await searchRes.json();
-      if (!searchData.response || searchData.response.length === 0) return null;
+      if (!searchData.response || searchData.response.length === 0) {
+        return { error: `Η ομάδα "${teamName}" δεν βρέθηκε! Έλεγξε την ορθογραφία.` };
+      }
 
-      let teamId = searchData.response[0].team.id;
+      let team = searchData.response[0].team;
 
-      // 2. Εντοπισμός του βασικού εγχώριου πρωταθλήματος (Serie A, La Liga, Ligue 1, Premier κλπ.)
-      let leaguesRes = await fetch(`https://v3.football.api-sports.io/leagues?team=${teamId}&current=true`, {
+      // 2. Εντοπισμός πρωταθλήματος
+      let leaguesRes = await fetch(`https://v3.football.api-sports.io/leagues?team=${team.id}&current=true`, {
         headers: { "x-apisports-key": key }
       });
       let leaguesData = await leaguesRes.json();
       
       let primaryLeague = leaguesData.response.find(l => l.league.type === "League") || leaguesData.response[0];
       let leagueId = primaryLeague ? primaryLeague.league.id : 135;
+      let leagueName = primaryLeague ? primaryLeague.league.name : "League";
       let seasonYear = primaryLeague ? primaryLeague.seasons[primaryLeague.seasons.length - 1].year : 2024;
 
-      // 3. Ανάκτηση στατιστικών για το πρωτάθλημα αυτό
-      let statsRes = await fetch(`https://v3.football.api-sports.io/teams/statistics?season=${seasonYear}&team=${teamId}&league=${leagueId}`, {
+      // 3. Στατιστικά
+      let statsRes = await fetch(`https://v3.football.api-sports.io/teams/statistics?season=${seasonYear}&team=${team.id}&league=${leagueId}`, {
         headers: { "x-apisports-key": key }
       });
       let statsData = await statsRes.json();
@@ -144,13 +148,15 @@
       let goals = (statsData.response.goals.for.total[side] || 1) / fixtures;
 
       return {
+        officialName: team.name,
+        league: leagueName,
         shots: isHome ? (goals * 7.5) : (goals * 6.5),
         sot: isHome ? (goals * 3.2) : (goals * 2.4),
         corners: isHome ? 6.0 : 4.5
       };
     } catch (e) {
-      console.error("Σφάλμα API:", e);
-      return null;
+      console.error(e);
+      return { error: "Σφάλμα επικοινωνίας με το API." };
     }
   }
 
@@ -158,39 +164,37 @@
     const hName = document.getElementById("homeTeam").value.trim();
     const aName = document.getElementById("awayTeam").value.trim();
     const runs = parseInt(document.getElementById("simRuns").value);
-    const status = document.getElementById("statusMsg");
+    const box = document.getElementById("statusBox");
+    const results = document.getElementById("resultsPanel");
 
-    status.innerText = "⏳ Ανάκτηση στατιστικών για " + hName + " & " + aName + "...";
-
-    // Ενσωματωμένη βάση για άμεση ακρίβεια
-    const localDb = {
-      "psg": { shotsH: 22.5, sotH: 9.0, cornersH: 6.8, shotsA: 17.5, sotA: 6.8, cornersA: 5.5 },
-      "lyon": { shotsH: 15.2, sotH: 6.2, cornersH: 5.8, shotsA: 9.67, sotA: 3.0, cornersA: 4.2 },
-      "chelsea": { shotsH: 11.5, sotH: 5.75, cornersH: 6.1, shotsA: 14.5, sotA: 5.0, cornersA: 5.2 },
-      "manchester united": { shotsH: 19.5, sotH: 5.8, cornersH: 6.2, shotsA: 19.25, sotA: 4.25, cornersA: 4.9 },
-      "man utd": { shotsH: 19.5, sotH: 5.8, cornersH: 6.2, shotsA: 19.25, sotA: 4.25, cornersA: 4.9 }
-    };
+    box.className = "status-box status-success";
+    box.style.display = "block";
+    box.innerText = `⏳ Αναζήτηση στατιστικών για "${hName}" & "${aName}"...`;
+    results.style.display = "none";
 
     let hStats = await fetchRealTeamStats(hName, true, API_KEY);
     let aStats = await fetchRealTeamStats(aName, false, API_KEY);
 
-    if (!hStats && localDb[hName.toLowerCase()]) {
-      let d = localDb[hName.toLowerCase()];
-      hStats = { shots: d.shotsH, sot: d.sotH, corners: d.cornersH };
-    }
-    if (!aStats && localDb[aName.toLowerCase()]) {
-      let d = localDb[aName.toLowerCase()];
-      aStats = { shots: d.shotsA, sot: d.sotA, corners: d.cornersA };
+    // Έλεγχος για σφάλματα εύρεσης ομάδας
+    let errors = [];
+    if (!hStats || hStats.error) errors.push(hStats ? hStats.error : `Η ομάδα "${hName}" δεν βρέθηκε.`);
+    if (!aStats || aStats.error) errors.push(aStats ? aStats.error : `Η ομάδα "${aName}" δεν βρέθηκε.`);
+
+    if (errors.length > 0) {
+      box.className = "status-box status-error";
+      box.innerHTML = `⚠️ <strong>Σφάλμα Εντοπισμού:</strong><br>${errors.join("<br>")}<br><small>Παρακαλώ γράψε το όνομα της ομάδας στα Αγγλικά (π.χ. Inter, Juventus, Arsenal).</small>`;
+      return;
     }
 
-    if (!hStats) hStats = { shots: 14.5, sot: 5.2, corners: 5.5 };
-    if (!aStats) aStats = { shots: 11.2, sot: 3.8, corners: 4.2 };
-
-    status.innerText = `✅ Δεδομένα έτοιμα! Εκτέλεση ${runs.toLocaleString()} προσομοιώσεων...`;
+    // Επιτυχής εύρεση πραγματικών δεδομένων
+    box.className = "status-box status-success";
+    box.innerHTML = `✅ <strong>Πραγματικά δεδομένα API:</strong><br>
+      • Γηπεδούχος: <strong>${hStats.officialName}</strong> (${hStats.league})<br>
+      • Φιλοξενούμενη: <strong>${aStats.officialName}</strong> (${aStats.league})<br>
+      🚀 Εκτελέστηκαν ${runs.toLocaleString()} προσομοιώσεις Monte Carlo!`;
 
     setTimeout(() => {
       runSimulation(hStats, aStats, runs);
-      status.innerText = "";
     }, 100);
   }
 
@@ -249,7 +253,6 @@
     document.getElementById("marketTable").innerHTML = tableHtml;
     document.getElementById("resultsPanel").style.display = "block";
 
-    // Δημιουργία Γραφήματος Κατανομής
     let bins = {};
     for (let i = 15; i <= 45; i++) bins[i] = 0;
     for (let i = 0; i < runs; i++) {
