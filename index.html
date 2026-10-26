@@ -624,26 +624,27 @@
 
   async function fetchRealTeamStats(teamName, isHome) {
     try {
-      // 1 κλήση: Εύρεση ομάδας
+      // 1. Εύρεση ομάδας
       let searchRes = await fetch(`https://v3.football.api-sports.io/teams?search=${encodeURIComponent(teamName)}`, {
         headers: { "x-apisports-key": API_KEY }
       });
       let searchData = await searchRes.json();
       
-      // Αν δεν υπάρχει η ομάδα
+      // Αν δεν υπάρχει η ομάδα ή έχει γραφτεί λάθος
       if (!searchData.response || searchData.response.length === 0) {
-        return { error: `Η ομάδα "${teamName}" δεν βρέθηκε!` };
+        return { error: `Η ομάδα "${teamName}" δεν βρέθηκε! Έλεγξε την ορθογραφία.` };
       }
 
       let team = searchData.response[0].team;
-      let country = searchData.response[0].team.country || "Italy";
+      let country = team.country || "";
 
-      // 2 κλήση: Στατιστικά ομάδας με ασφαλές fallback
+      // 2. Καθορισμός πρωταθλήματος βάσει χώρας
       let leagueId = 135; // Default Serie A
       if (country === "England") leagueId = 39;
-      if (country === "Spain") leagueId = 140;
-      if (country === "Germany") leagueId = 78;
-      if (country === "France") leagueId = 61;
+      else if (country === "Spain") leagueId = 140;
+      else if (country === "Germany") leagueId = 78;
+      else if (country === "France") leagueId = 61;
+      else if (country === "Greece") leagueId = 197;
 
       let statsRes = await fetch(`https://v3.football.api-sports.io/teams/statistics?season=2024&team=${team.id}&league=${leagueId}`, {
         headers: { "x-apisports-key": API_KEY }
@@ -658,7 +659,7 @@
 
       return {
         officialName: team.name,
-        league: statsData.response?.league?.name || "League",
+        league: statsData.response?.league?.name || (country ? `${country} League` : "League"),
         xg: (goals * 0.95).toFixed(2),
         shots: Number((isHome ? (goals * 8.2) : (goals * 7.1)).toFixed(1)),
         sot: Number((isHome ? (goals * 3.4) : (goals * 2.6)).toFixed(1)),
@@ -667,16 +668,7 @@
       };
     } catch (e) {
       console.error(e);
-      // Σε περίπτωση δικτυακού ορίου, δώσε εκτιμώμενα δεδομένα για να μην διακόπτεται η προσομοίωση
-      return {
-        officialName: teamName,
-        league: "Serie A / Calcio",
-        xg: isHome ? "1.40" : "1.15",
-        shots: isHome ? 13.8 : 11.2,
-        sot: isHome ? 4.8 : 3.6,
-        corners: isHome ? 5.6 : 4.3,
-        cards: isHome ? 2.0 : 2.3
-      };
+      return { error: `Σφάλμα επικοινωνίας για "${teamName}".` };
     }
   }
   async function startProcess() {
