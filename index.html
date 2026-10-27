@@ -17,6 +17,7 @@
       --text-white: #f8fafc;
       --text-muted: #94a3b8;
       --text-green: #34d399;
+      --text-blue: #38bdf8;
       --danger-bg: #450a0a;
       --danger-border: #dc2626;
       --danger-text: #fecaca;
@@ -257,16 +258,15 @@
       font-size: 12px;
       font-weight: 500;
     }
-    .teams-subheading span {
-      color: var(--text-green);
-      font-weight: 600;
-    }
+    .teams-subheading span.h-tag { color: var(--text-green); font-weight: 600; }
+    .teams-subheading span.a-tag { color: var(--text-blue); font-weight: 600; }
 
+    /* Επεξεργάσιμα Metrics Cards */
     .metrics-6-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     @media (max-width: 800px) {
       .metrics-6-grid { grid-template-columns: repeat(2, 1fr); }
@@ -275,7 +275,7 @@
       background: var(--card-inner);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 12px 10px;
+      padding: 10px 8px;
       text-align: center;
     }
     .metric-small-title {
@@ -284,16 +284,48 @@
       margin-bottom: 8px;
       white-space: nowrap;
     }
-    .metric-small-values {
+    .metric-inputs-pair {
       display: flex;
       justify-content: center;
-      align-items: baseline;
-      gap: 12px;
-      font-size: 15px;
-      font-weight: 700;
+      align-items: center;
+      gap: 6px;
     }
-    .val-home { color: #34d399; }
-    .val-away { color: #38bdf8; }
+    .input-metric {
+      width: 54px;
+      background: #08111d;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 4px 2px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .input-metric.home { color: var(--text-green); border-color: rgba(16, 185, 129, 0.4); }
+    .input-metric.away { color: var(--text-blue); border-color: rgba(56, 189, 248, 0.4); }
+    .input-metric:focus { border-color: #fff; }
+
+    .re-run-wrapper {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .btn-rerun {
+      background: #1e293b;
+      border: 1px solid var(--accent-green);
+      color: var(--text-green);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-rerun:hover {
+      background: var(--accent-green);
+      color: #042f1a;
+    }
 
     .big-cards-grid {
       display: grid;
@@ -397,125 +429,13 @@
 </head>
 <body>
 
-<!-- Λίστα προτάσεων (Autocomplete) -->
 <datalist id="teamsList">
-  <!-- Italy - Serie A -->
-  <option value="Atalanta">
-  <option value="Bologna">
-  <option value="Cagliari">
-  <option value="Como">
-  <option value="Frosinone">
-  <option value="Fiorentina">
-  <option value="Genoa">
-  <option value="Inter">
-  <option value="Juventus">
-  <option value="Lazio">
-  <option value="Lecce">
-  <option value="AC Milan">
-  <option value="Monza">
-  <option value="Napoli">
-  <option value="Parma">
-  <option value="Roma">
-  <option value="Torino">
-  <option value="Udinese">
-  <option value="Venezia">
-  <option value="Verona">
-  <option value="Sassuolo">
-  <!-- England - Premier League -->
-  <option value="Arsenal">
-  <option value="Aston Villa">
-  <option value="Bournemouth">
-  <option value="Brentford">
-  <option value="Brighton">
-  <option value="Chelsea">
-  <option value="Crystal Palace">
-  <option value="Everton">
-  <option value="Fulham">
-  <option value="Ipswich">
-  <option value="Leicester">
-  <option value="Liverpool">
-  <option value="Manchester City">
-  <option value="Manchester United">
-  <option value="Newcastle">
-  <option value="Nottingham Forest">
-  <option value="Sunderland">
-  <option value="Tottenham">
-  <option value="Hull">
-  <option value="Coventry">
-  <!-- Spain - La Liga -->
-  <option value="Alaves">
-  <option value="Athletic Club">
-  <option value="Atletico Madrid">
-  <option value="Barcelona">
-  <option value="Celta Vigo">
-  <option value="Espanyol">
-  <option value="Getafe">
-  <option value="Girona">
-  <option value="Las Palmas">
-  <option value="Leganes">
-  <option value="Mallorca">
-  <option value="Osasuna">
-  <option value="Rayo Vallecano">
-  <option value="Real Betis">
-  <option value="Real Madrid">
-  <option value="Real Sociedad">
-  <option value="Sevilla">
-  <option value="Valencia">
-  <option value="Valladolid">
-  <option value="Villarreal">
-  <!-- Germany - Bundesliga -->
-  <option value="Augsburg">
-  <option value="Bayer Leverkusen">
-  <option value="Bayern Munich">
-  <option value="Bochum">
-  <option value="Borussia Dortmund">
-  <option value="Borussia Monchengladbach">
-  <option value="Eintracht Frankfurt">
-  <option value="Freiburg">
-  <option value="Heidenheim">
-  <option value="Hoffenheim">
-  <option value="Holstein Kiel">
-  <option value="Mainz">
-  <option value="RB Leipzig">
-  <option value="St. Pauli">
-  <option value="Union Berlin">
-  <option value="VfB Stuttgart">
-  <option value="VfL Wolfsburg">
-  <option value="Werder Bremen">
-  <!-- France - Ligue 1 -->
-  <option value="Angers">
-  <option value="Auxerre">
-  <option value="Brest">
-  <option value="Le Havre">
-  <option value="Lens">
-  <option value="Lille">
-  <option value="Lyon">
-  <option value="Marseille">
-  <option value="Monaco">
-  <option value="Montpellier">
-  <option value="Nantes">
-  <option value="Nice">
-  <option value="Paris Saint Germain">
-  <option value="Reims">
-  <option value="Rennes">
-  <option value="Saint-Etienne">
-  <option value="Strasbourg">
-  <option value="Toulouse">
-  <!-- Greece - Super League -->
-  <option value="AEK Athens">
-  <option value="Aris">
-  <option value="Asteras Tripolis">
-  <option value="Atromitos">
-  <option value="Kallithea">
-  <option value="Lamia">
-  <option value="Levadiakos">
-  <option value="OFI">
-  <option value="Olympiacos">
-  <option value="Panathinaikos">
-  <option value="Panetolikos">
-  <option value="Panserraikos">
-  <option value="PAOK">
-  <option value="Volos">
+  <option value="Inter"><option value="Juventus"><option value="AC Milan"><option value="Napoli"><option value="Roma"><option value="Lazio"><option value="Atalanta"><option value="Fiorentina"><option value="Sassuolo"><option value="Bologna">
+  <option value="Arsenal"><option value="Aston Villa"><option value="Liverpool"><option value="Manchester City"><option value="Manchester United"><option value="Chelsea"><option value="Newcastle"><option value="Tottenham">
+  <option value="Real Madrid"><option value="Barcelona"><option value="Atletico Madrid"><option value="Sevilla"><option value="Girona">
+  <option value="Bayern Munich"><option value="Bayer Leverkusen"><option value="Borussia Dortmund"><option value="RB Leipzig">
+  <option value="Paris Saint Germain"><option value="Lyon"><option value="Marseille"><option value="Monaco">
+  <option value="Olympiacos"><option value="Panathinaikos"><option value="PAOK"><option value="AEK Athens">
 </datalist>
 
 <div class="container">
@@ -543,12 +463,12 @@
     <div class="card-header-flex">
       <div>
         <div class="card-title">⚡ Αυτόματη Συλλογή Δεδομένων & Παράμετροι Αγώνα</div>
-        <div class="card-subtitle">Το σύστημα καλεί αυτόματα το API-Football για εντός/εκτός έδρας στατιστικά και εκτελεί υπολογιστικά σενάρια.</div>
+        <div class="card-subtitle">Το σύστημα καλεί αυτόματα το API για εντός/εκτός στατιστικά ή μπορείς να εισάγεις μόνος σου τα ακριβή νούμερα.</div>
       </div>
       <div class="quick-matches">
         Γρήγορα ματς:
-        <button class="quick-btn" onclick="setMatch('Paris Saint Germain', 'Lyon')">PSG vs Lyon</button>
         <button class="quick-btn" onclick="setMatch('Chelsea', 'Manchester United')">Chelsea vs Man Utd</button>
+        <button class="quick-btn" onclick="setMatch('Paris Saint Germain', 'Lyon')">PSG vs Lyon</button>
         <button class="quick-btn" onclick="setMatch('Real Madrid', 'Barcelona')">El Clásico</button>
       </div>
     </div>
@@ -556,11 +476,11 @@
     <div class="form-grid">
       <div class="form-group">
         <label>🏠 Γηπεδούχος (Home Team)</label>
-        <input type="text" id="homeTeam" list="teamsList" class="form-control" value="Paris Saint Germain" placeholder="Πληκτρολόγησε ομάδα...">
+        <input type="text" id="homeTeam" list="teamsList" class="form-control" value="Chelsea" placeholder="π.χ. Chelsea">
       </div>
       <div class="form-group">
         <label>✈️ Φιλοξενούμενη (Away Team)</label>
-        <input type="text" id="awayTeam" list="teamsList" class="form-control" value="Lyon" placeholder="Πληκτρολόγησε ομάδα...">
+        <input type="text" id="awayTeam" list="teamsList" class="form-control" value="Manchester United" placeholder="π.χ. Manchester United">
       </div>
       <div class="form-group">
         <label>📅 Ημερομηνία</label>
@@ -594,57 +514,64 @@
     <div class="section-title-row">
       <div style="display: flex; align-items: center; gap: 8px;">
         <span style="color: var(--accent-green);">●</span>
-        <span>ΣΤΑΤΙΣΤΙΚΑ ΕΙΣΟΔΟΥ (HOME VS AWAY METRICS)</span>
+        <span>ΣΤΑΤΙΣΤΙΚΑ ΕΙΣΟΔΟΥ (HOME VS AWAY METRICS) - ΕΠΕΞΕΡΓΑΣΙΜΑ</span>
       </div>
       <div class="teams-subheading" id="teamsHeaderSub">
-        Γηπεδούχος: <span id="lblHome">-</span> (Εντός) • Φιλοξενούμενη: <span id="lblAway">-</span> (Εκτός)
+        Γηπεδούχος: <span class="h-tag" id="lblHome">-</span> (Εντός) • Φιλοξενούμενη: <span class="a-tag" id="lblAway">-</span> (Εκτός)
       </div>
     </div>
 
-    <!-- 6 Input Metrics -->
+    <!-- 6 Input Metrics (Πλήρως επεξεργάσιμα πεδία) -->
     <div class="metrics-6-grid">
       <div class="metric-small-card">
         <div class="metric-small-title">xGoals (Αναμενόμενα)</div>
-        <div class="metric-small-values">
-          <span class="val-home" id="mXgH">-</span>
-          <span class="val-away" id="mXgA">-</span>
+        <div class="metric-inputs-pair">
+          <input type="number" step="0.05" id="inpXgH" class="input-metric home">
+          <input type="number" step="0.05" id="inpXgA" class="input-metric away">
         </div>
       </div>
       <div class="metric-small-card">
         <div class="metric-small-title">Συνολικά Σουτ / Αγώνα</div>
-        <div class="metric-small-values">
-          <span class="val-home" id="mShotsH">-</span>
-          <span class="val-away" id="mShotsA">-</span>
+        <div class="metric-inputs-pair">
+          <input type="number" step="0.1" id="inpShotsH" class="input-metric home">
+          <input type="number" step="0.1" id="inpShotsA" class="input-metric away">
         </div>
       </div>
       <div class="metric-small-card">
         <div class="metric-small-title">Σουτ στο Τέρμα (SoT)</div>
-        <div class="metric-small-values">
-          <span class="val-home" id="mSotH">-</span>
-          <span class="val-away" id="mSotA">-</span>
+        <div class="metric-inputs-pair">
+          <input type="number" step="0.1" id="inpSotH" class="input-metric home">
+          <input type="number" step="0.1" id="inpSotA" class="input-metric away">
         </div>
       </div>
       <div class="metric-small-card">
         <div class="metric-small-title">Ευστοχία SoT %</div>
-        <div class="metric-small-values">
-          <span class="val-home" id="mAccH">-</span>
-          <span class="val-away" id="mAccA">-</span>
+        <div class="metric-inputs-pair">
+          <input type="text" id="inpAccH" class="input-metric home" readonly style="opacity: 0.8;">
+          <input type="text" id="inpAccA" class="input-metric away" readonly style="opacity: 0.8;">
         </div>
       </div>
       <div class="metric-small-card">
         <div class="metric-small-title">Κόρνερ / Αγώνα</div>
-        <div class="metric-small-values">
-          <span class="val-home" id="mCorH">-</span>
-          <span class="val-away" id="mCorA">-</span>
+        <div class="metric-inputs-pair">
+          <input type="number" step="0.1" id="inpCorH" class="input-metric home">
+          <input type="number" step="0.1" id="inpCorA" class="input-metric away">
         </div>
       </div>
       <div class="metric-small-card">
         <div class="metric-small-title">Κίτρινες Κάρτες</div>
-        <div class="metric-small-values">
-          <span class="val-home" id="mCardH">-</span>
-          <span class="val-away" id="mCardA">-</span>
+        <div class="metric-inputs-pair">
+          <input type="number" step="0.1" id="inpCardH" class="input-metric home">
+          <input type="number" step="0.1" id="inpCardA" class="input-metric away">
         </div>
       </div>
+    </div>
+
+    <!-- Κουμπί επανεκτέλεσης με τα χειροκίνητα στατιστικά -->
+    <div class="re-run-wrapper">
+      <button class="btn-rerun" onclick="reRunFromInputs()">
+        ⚡ Ενημέρωση & Εκτέλεση Monte Carlo με τα νέα νούμερα
+      </button>
     </div>
 
     <!-- 4 Big Simulation Cards -->
@@ -721,6 +648,8 @@
 
   let chartPoisson = null;
   let chartCompare = null;
+  let currentHomeName = "Chelsea";
+  let currentAwayName = "Manchester United";
 
   function setMatch(h, a) {
     document.getElementById("homeTeam").value = h;
@@ -736,20 +665,19 @@
 
   async function fetchRealTeamStats(teamName, isHome) {
     try {
-      // 1. Εύρεση ομάδας
       let searchRes = await fetch(`https://v3.football.api-sports.io/teams?search=${encodeURIComponent(teamName)}`, {
         headers: { "x-apisports-key": API_KEY }
       });
       let searchData = await searchRes.json();
       
       if (!searchData.response || searchData.response.length === 0) {
-        return { error: `Η ομάδα "${teamName}" δεν βρέθηκε! Έλεγξε την ορθογραφία.` };
+        return { error: `Η ομάδα "${teamName}" δεν βρέθηκε!` };
       }
 
       let team = searchData.response[0].team;
       let country = team.country || "";
 
-      let leagueId = 135; // Default Serie A
+      let leagueId = 135;
       if (country === "England") leagueId = 39;
       else if (country === "Spain") leagueId = 140;
       else if (country === "Germany") leagueId = 78;
@@ -769,8 +697,8 @@
 
       return {
         officialName: team.name,
-        league: statsData.response?.league?.name || (country ? `${country} League` : "League"),
-        xg: (goals * 0.95).toFixed(2),
+        league: statsData.response?.league?.name || "League",
+        xg: Number((goals * 0.95).toFixed(2)),
         shots: Number((isHome ? (goals * 8.2) : (goals * 7.1)).toFixed(1)),
         sot: Number((isHome ? (goals * 3.4) : (goals * 2.6)).toFixed(1)),
         corners: Number((isHome ? 5.8 : 4.4).toFixed(1)),
@@ -806,31 +734,67 @@
       return;
     }
 
+    currentHomeName = hStats.officialName;
+    currentAwayName = aStats.officialName;
+
     alertBox.className = "status-alert success";
-    alertBox.innerHTML = `● Δεδομένα φορτώθηκαν! Εκτέλεση ${runs.toLocaleString()} Monte Carlo σεναρίων... (${hStats.officialName} vs ${aStats.officialName})`;
+    alertBox.innerHTML = `● Δεδομένα φορτώθηκαν! Μπορείς να επεξεργαστείς τα νούμερα παρακάτω και να ξανατρέξεις την προσομοίωση.`;
 
-    document.getElementById("lblHome").innerText = hStats.officialName;
-    document.getElementById("lblAway").innerText = aStats.officialName;
-    document.getElementById("mXgH").innerText = hStats.xg;
-    document.getElementById("mXgA").innerText = aStats.xg;
-    document.getElementById("mShotsH").innerText = hStats.shots;
-    document.getElementById("mShotsA").innerText = aStats.shots;
-    document.getElementById("mSotH").innerText = hStats.sot;
-    document.getElementById("mSotA").innerText = aStats.sot;
-    document.getElementById("mAccH").innerText = ((hStats.sot / hStats.shots) * 100).toFixed(1) + "%";
-    document.getElementById("mAccA").innerText = ((aStats.sot / aStats.shots) * 100).toFixed(1) + "%";
-    document.getElementById("mCorH").innerText = hStats.corners;
-    document.getElementById("mCorA").innerText = aStats.corners;
-    document.getElementById("mCardH").innerText = hStats.cards;
-    document.getElementById("mCardA").innerText = aStats.cards;
+    document.getElementById("lblHome").innerText = currentHomeName;
+    document.getElementById("lblAway").innerText = currentAwayName;
 
-    setTimeout(() => {
-      runSimulation(hStats, aStats, runs);
-      dashboard.style.display = "block";
-    }, 100);
+    // Συμπλήρωση των επεξεργάσιμων inputs
+    document.getElementById("inpXgH").value = hStats.xg;
+    document.getElementById("inpXgA").value = aStats.xg;
+    document.getElementById("inpShotsH").value = hStats.shots;
+    document.getElementById("inpShotsA").value = hStats.shots;
+    document.getElementById("inpSotH").value = hStats.sot;
+    document.getElementById("inpSotA").value = hStats.sot;
+    document.getElementById("inpCorH").value = hStats.corners;
+    document.getElementById("inpCorA").value = hStats.corners;
+    document.getElementById("inpCardH").value = hStats.cards;
+    document.getElementById("inpCardA").value = hStats.cards;
+    updateAccuracyFields();
+
+    dashboard.style.display = "block";
+    runSimulationFromCurrentValues(runs);
   }
 
-  function runSimulation(hStats, aStats, runs) {
+  function updateAccuracyFields() {
+    let shH = parseFloat(document.getElementById("inpShotsH").value) || 1;
+    let soH = parseFloat(document.getElementById("inpSotH").value) || 0;
+    let shA = parseFloat(document.getElementById("inpShotsA").value) || 1;
+    let soA = parseFloat(document.getElementById("inpSotA").value) || 0;
+
+    document.getElementById("inpAccH").value = ((soH / shH) * 100).toFixed(1) + "%";
+    document.getElementById("inpAccA").value = ((soA / shA) * 100).toFixed(1) + "%";
+  }
+
+  function reRunFromInputs() {
+    updateAccuracyFields();
+    const runs = parseInt(document.getElementById("simRuns").value);
+    runSimulationFromCurrentValues(runs);
+  }
+
+  function runSimulationFromCurrentValues(runs) {
+    let hStats = {
+      officialName: currentHomeName,
+      xg: parseFloat(document.getElementById("inpXgH").value) || 1.4,
+      shots: parseFloat(document.getElementById("inpShotsH").value) || 14.0,
+      sot: parseFloat(document.getElementById("inpSotH").value) || 5.0,
+      corners: parseFloat(document.getElementById("inpCorH").value) || 5.5,
+      cards: parseFloat(document.getElementById("inpCardH").value) || 2.0
+    };
+
+    let aStats = {
+      officialName: currentAwayName,
+      xg: parseFloat(document.getElementById("inpXgA").value) || 1.1,
+      shots: parseFloat(document.getElementById("inpShotsA").value) || 11.0,
+      sot: parseFloat(document.getElementById("inpSotA").value) || 3.5,
+      corners: parseFloat(document.getElementById("inpCorA").value) || 4.2,
+      cards: parseFloat(document.getElementById("inpCardA").value) || 2.2
+    };
+
     let totShotsSim = new Uint8Array(runs);
     let totSotSim = new Uint8Array(runs);
     let sumShots = 0, sumSot = 0;
@@ -849,8 +813,8 @@
       totSotSim[i] = totSo;
       sumSot += totSo;
 
-      let hg = getPoisson(parseFloat(hStats.xg));
-      let ag = getPoisson(parseFloat(aStats.xg));
+      let hg = getPoisson(hStats.xg);
+      let ag = getPoisson(aStats.xg);
       if (hg > ag) homeWins++;
       else if (hg === ag) draws++;
       else awayWins++;
