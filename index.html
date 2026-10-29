@@ -778,29 +778,40 @@
     let sumShots = 0, sumSot = 0;
     let homeWins = 0, draws = 0, awayWins = 0;
 
+    // Προσαρμογή αγώνα (Matchup Projections) αντί για απλό άθροισμα
+    // Η εντός έδρας ομάδα διατηρεί το momentum της, η εκτός έδρας συμπιέζεται στο Stamford Bridge
+    const adjShotsH = hStats.shots * 0.95;
+    const adjShotsA = aStats.shots * 0.70; // Η United συμπιέζεται από τα 19.25 σε ~13.5
+    
+    const adjSotH = hStats.sot * 0.92;
+    const adjSotA = aStats.sot * 0.80; // Τα SoT της United συμπιέζονται σε ~3.4
+    
+    const adjCornersH = hStats.corners * 0.94;
+    const adjCornersA = aStats.corners * 0.80;
+
     for (let i = 0; i < runs; i++) {
-      let hs = getPoisson(hStats.shots);
-      let as = getPoisson(aStats.shots);
-      let totS = hs + as;
-      totShotsSim[i] = totS;
-      sumShots += totS;
+        let hs = getPoisson(adjShotsH);
+        let as = getPoisson(adjShotsA);
+        let tots = hs + as;
+        totShotsSim[i] = tots;
+        sumShots += tots;
 
-      let hsot = getPoisson(hStats.sot);
-      let asot = getPoisson(aStats.sot);
-      let totSo = hsot + asot;
-      totSotSim[i] = totSo;
-      sumSot += totSo;
+        let hsot = getPoisson(adjSotH);
+        let asot = getPoisson(adjSotA);
+        let totSo = hsot + asot;
+        totSotSim[i] = totSo;
+        sumSot += totSo;
 
-      let hg = getPoisson(hStats.xg);
-      let ag = getPoisson(aStats.xg);
-      if (hg > ag) homeWins++;
-      else if (hg === ag) draws++;
-      else awayWins++;
+        let hg = getPoisson(hStats.xg);
+        let ag = getPoisson(aStats.xg);
+        if (hg > ag) homeWins++;
+        else if (hg === ag) draws++;
+        else awayWins++;
     }
 
     let avgShots = (sumShots / runs).toFixed(1);
     let avgSot = (sumSot / runs).toFixed(1);
-    let avgCorners = (hStats.corners + aStats.corners).toFixed(1);
+    let avgCorners = (adjCornersH + adjCornersA).toFixed(1);
 
     let pHome = Math.round((homeWins / runs) * 100);
     let pDraw = Math.round((draws / runs) * 100);
