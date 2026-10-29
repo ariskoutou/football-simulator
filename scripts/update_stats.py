@@ -31,10 +31,9 @@ DISPLAY_NAMES = {
 }
 
 CSV_URLS = [
-    "https://www.football-data.co.uk/mmz4281/2425/E0.csv",  # Premier League
-    "https://www.football-data.co.uk/mmz4281/2425/I1.csv"   # Serie A
+    "https://www.football-data.co.uk/mmz4281/2627/E0.csv",  # Premier League 2026-2027
+    "https://www.football-data.co.uk/mmz4281/2627/I1.csv"   # Serie A 2026-2027
 ]
-
 def update_all_stats():
     team_data = {}
     headers = {'User-Agent': 'Mozilla/5.0'}
