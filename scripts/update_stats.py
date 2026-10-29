@@ -4,12 +4,9 @@ import json
 import os
 import re
 import urllib.request
-from datetime import datetime
 
-# Ορισμός τρέχουσας σεζόν
-# Για τη σεζόν που ξεκινά το καλοκαίρι (π.χ. 2024-2025 -> 2024, 2025-2026 -> 2025 κ.ο.κ.)
-CURRENT_SEASON_START_YEAR = "2024" 
-SEASON_CUTOFF_DATE = f"{CURRENT_SEASON_START_YEAR}-08-01"
+# Ορισμός τρέχουσας σεζόν (2024 για τη σεζόν 2024-2025)
+TARGET_SEASON = "2024"
 
 FD_TEAM_MAPPING = {
     # Premier League
@@ -32,8 +29,8 @@ FD_TEAM_MAPPING = {
 }
 
 CSV_URLS = [
-    "https://www.football-data.co.uk/mmz4281/2425/E0.csv",  # Premier League (μόνο πρωτάθλημα)
-    "https://www.football-data.co.uk/mmz4281/2425/I1.csv"   # Serie A (μόνο πρωτάθλημα)
+    "https://www.football-data.co.uk/mmz4281/2425/E0.csv",
+    "https://www.football-data.co.uk/mmz4281/2425/I1.csv"
 ]
 
 def fetch_corners_and_cards():
@@ -87,11 +84,10 @@ def fetch_corners_and_cards():
     return averages
 
 def get_understat_team_stats(team_name):
-    # Κλήση απευθείας στο endpoint της τρέχουσας σεζόν
-    url = f"https://understat.com/team/{urllib.request.quote(team_name)}/{CURRENT_SEASON_START_YEAR}"
+    url = f"https://understat.com/team/{urllib.request.quote(team_name)}"
     req = urllib.request.Request(
         url,
-        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
     )
     
     try:
@@ -100,31 +96,45 @@ def get_understat_team_stats(team_name):
             
         match = re.search(r"datesData\s*=\s*JSON\.parse\('([^']+)'\)", html)
         if not match:
+            print(f"Δεν βρέθηκαν datesData για {team_name}")
             return None
             
         hex_data = match.group(1)
         json_str = bytes.fromhex(hex_data).decode('utf-8')
         matches = json.loads(json_str)
         
-        # Φιλτράρισμα:
-        # 1. Μόνο αγώνες που έχουν λήξει (isResult == True)
-        # 2. Μόνο αγώνες της φετινής περιόδου (από Αύγουστο και μετά)
+        # Μόνο τελειωμένα ματς της τρέχουσας σεζόν
         home_matches = [
             m for m in matches 
             if m.get('side') == 'h' 
             and m.get('isResult') == True 
-            and m.get('datetime', '') >= SEASON_CUTOFF_DATE
+            and (str(m.get('season', '')) == TARGET_SEASON or m.get('datetime', '') >= f"{TARGET_SEASON}-08-01")
         ]
         
         away_matches = [
             m for m in matches 
             if m.get('side') == 'a' 
             and m.get('isResult') == True 
-            and m.get('datetime', '') >= SEASON_CUTOFF_DATE
+            and (str(m.get('season', '')) == TARGET_SEASON or m.get('datetime', '') >= f"{TARGET_SEASON}-08-01")
         ]
         
         def calc_averages(match_list):
             if not match_list:
                 return {"xg": 1.40, "shots": 13.0, "sot": 4.5}
             n = len(match_list)
-            sum_xg = sum(float(m.get('xG',
+            sum_xg = sum(float(m.get('xG', 0)) for m in match_list)
+            sum_shots = sum(float(m.get('shots', 0)) for m in match_list)
+            sum_sot = sum(float(m.get('shotsOnTarget', 0)) for m in match_list)
+            
+            return {
+                "xg": round(sum_xg / n, 2),
+                "shots": round(sum_shots / n, 2),
+                "sot": round(sum_sot / n, 2)
+            }
+            
+        return {
+            "home": calc_averages(home_matches),
+            "away": calc_averages(away_matches)
+        }
+    except Exception as e:
+        print(
