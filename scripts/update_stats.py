@@ -5,31 +5,55 @@ import os
 import re
 import urllib.request
 
-TARGET_SEASON = "2026"
-
 FD_TEAM_MAPPING = {
     # Premier League
-    "Arsenal": "Arsenal", "Aston Villa": "Aston Villa", "Bournemouth": "Bournemouth",
-    "Brentford": "Brentford", "Brighton": "Brighton", "Chelsea": "Chelsea",
-    "Crystal Palace": "Crystal Palace", "Everton": "Everton", "Fulham": "Fulham",
-    "Ipswich": "Ipswich", "Leicester": "Leicester", "Liverpool": "Liverpool",
-    "Manchester City": "Man City", "Manchester United": "Man United",
-    "Newcastle United": "Newcastle", "Nottingham Forest": "Nott'm Forest",
-    "Southampton": "Southampton", "Tottenham": "Tottenham", "West Ham": "West Ham",
+    "Arsenal": "Arsenal",
+    "Aston Villa": "Aston Villa",
+    "Bournemouth": "Bournemouth",
+    "Brentford": "Brentford",
+    "Brighton": "Brighton",
+    "Chelsea": "Chelsea",
+    "Crystal Palace": "Crystal Palace",
+    "Everton": "Everton",
+    "Fulham": "Fulham",
+    "Ipswich": "Ipswich",
+    "Leicester": "Leicester",
+    "Liverpool": "Liverpool",
+    "Manchester City": "Man City",
+    "Manchester United": "Man United",
+    "Newcastle United": "Newcastle",
+    "Nottingham Forest": "Nott'm Forest",
+    "Southampton": "Southampton",
+    "Tottenham": "Tottenham",
+    "West Ham": "West Ham",
     "Wolverhampton Wanderers": "Wolves",
     # Serie A
-    "Atalanta": "Atalanta", "Bologna": "Bologna", "Cagliari": "Cagliari",
-    "Como": "Como", "Empoli": "Empoli", "Fiorentina": "Fiorentina",
-    "Genoa": "Genoa", "Hellas Verona": "Verona", "Inter": "Inter",
-    "Juventus": "Juventus", "Lazio": "Lazio", "Lecce": "Lecce",
-    "Monza": "Monza", "Napoli": "Napoli", "Parma": "Parma",
-    "Roma": "Roma", "Torino": "Torino", "Udinese": "Udinese",
-    "Venezia": "Venezia", "AC Milan": "Milan"
+    "Atalanta": "Atalanta",
+    "Bologna": "Bologna",
+    "Cagliari": "Cagliari",
+    "Como": "Como",
+    "Empoli": "Empoli",
+    "Fiorentina": "Fiorentina",
+    "Genoa": "Genoa",
+    "Hellas Verona": "Verona",
+    "Inter": "Inter",
+    "Juventus": "Juventus",
+    "Lazio": "Lazio",
+    "Lecce": "Lecce",
+    "Monza": "Monza",
+    "Napoli": "Napoli",
+    "Parma": "Parma",
+    "Roma": "Roma",
+    "Torino": "Torino",
+    "Udinese": "Udinese",
+    "Venezia": "Venezia",
+    "AC Milan": "Milan"
 }
 
 CSV_URLS = [
-    "https://www.football-data.co.uk/mmz4281/2627/E0.csv",  # Premier League 2026-2027
-    "https://www.football-data.co.uk/mmz4281/2627/I1.csv"   # Serie A 2026-2027]
+    "https://www.football-data.co.uk/mmz4281/2425/E0.csv",
+    "https://www.football-data.co.uk/mmz4281/2425/I1.csv"
+]
 
 def fetch_corners_and_cards():
     team_data = {}
@@ -64,7 +88,7 @@ def fetch_corners_and_cards():
                         team_data[a_team] = {'home': {'c': [], 'cd': []}, 'away': {'c': [], 'cd': []}}
                     team_data[a_team]['away']['c'].append(ac)
                     team_data[a_team]['away']['cd'].append(ay)
-        except Exception as e:
+        except Exception:
             pass
 
     averages = {}
@@ -100,15 +124,10 @@ def get_understat_team_stats(team_name):
         json_str = bytes.fromhex(hex_data).decode('utf-8')
         matches = json.loads(json_str)
         
-        # Κρατάμε τα ολοκληρωμένα ματς
-        # Ταξινομούμε ανά ημερομηνία για να πάρουμε τα πιο πρόσφατα
         finished = [m for m in matches if m.get('isResult') == True]
-        
-        # Αν υπάρχουν ματς με ημερομηνία πρόσφατη (τρέχουσα περίοδος)
-        # Κρατάμε μόνο αυτά
         recent_matches = [m for m in finished if m.get('datetime', '') >= '2024-08-01']
         if not recent_matches:
-            recent_matches = finished[-15:] # fallback στα τελευταία ματς
+            recent_matches = finished[-15:]
             
         home_matches = [m for m in recent_matches if m.get('side') == 'h']
         away_matches = [m for m in recent_matches if m.get('side') == 'a']
@@ -131,8 +150,7 @@ def get_understat_team_stats(team_name):
             "home": calc_averages(home_matches),
             "away": calc_averages(away_matches)
         }
-    except Exception as e:
-        print(f"Error fetching {team_name}: {e}")
+    except Exception:
         return None
 
 def main():
