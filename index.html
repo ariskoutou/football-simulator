@@ -757,7 +757,7 @@
   function runSimulationFromCurrentValues(runs) {
     let hStats = {
       officialName: currentHomeName,
-      xg: parseFloat(document.getElementById("inpXgH").value) || 1.4,
+     xg: (parseFloat(document.getElementById("inpSotH").value) || 5.0) * 0.28,
       shots: parseFloat(document.getElementById("inpShotsH").value) || 14.0,
       sot: parseFloat(document.getElementById("inpSotH").value) || 5.0,
       corners: parseFloat(document.getElementById("inpCorH").value) || 5.5,
@@ -766,7 +766,7 @@
 
     let aStats = {
       officialName: currentAwayName,
-      xg: parseFloat(document.getElementById("inpXgA").value) || 1.1,
+     xg: (parseFloat(document.getElementById("inpSotA").value) || 3.8) * 0.28,
       shots: parseFloat(document.getElementById("inpShotsA").value) || 11.0,
       sot: parseFloat(document.getElementById("inpSotA").value) || 3.5,
       corners: parseFloat(document.getElementById("inpCorA").value) || 4.2,
