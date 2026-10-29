@@ -1,642 +1,642 @@
 {
-  "Manchester United": {
-    "home": {
-      "xg": 1.89,
-      "shots": 14.79,
-      "sot": 4.74,
-      "corners": 5.58,
-      "cards": 2.26
-    },
-    "away": {
-      "xg": 1.7,
-      "shots": 12.95,
-      "sot": 4.42,
-      "corners": 4.95,
-      "cards": 2.26
-    }
-  },
-  "Fulham": {
-    "home": {
-      "xg": 1.84,
-      "shots": 13.79,
-      "sot": 4.89,
-      "corners": 5.32,
-      "cards": 1.79
-    },
-    "away": {
-      "xg": 1.72,
-      "shots": 13.63,
-      "sot": 4.21,
-      "corners": 5.47,
-      "cards": 2.53
-    }
-  },
-  "Ipswich": {
-    "home": {
-      "xg": 1.41,
-      "shots": 10.95,
-      "sot": 3.58,
-      "corners": 4.11,
-      "cards": 1.89
-    },
-    "away": {
-      "xg": 1.17,
-      "shots": 8.84,
-      "sot": 3.11,
-      "corners": 3.53,
-      "cards": 2.79
-    }
-  },
-  "Liverpool": {
-    "home": {
-      "xg": 2.21,
-      "shots": 16.53,
-      "sot": 5.89,
-      "corners": 6.53,
-      "cards": 1.74
-    },
-    "away": {
-      "xg": 2.35,
-      "shots": 17.58,
-      "sot": 6.26,
-      "corners": 6.79,
-      "cards": 1.79
-    }
-  },
   "Arsenal": {
     "home": {
-      "xg": 2.12,
-      "shots": 16.11,
-      "sot": 5.53,
-      "corners": 7.42,
-      "cards": 1.74
+      "xg": 2.32,
+      "shots": 17.25,
+      "sot": 6.25,
+      "corners": 6.75,
+      "cards": 1.25
     },
     "away": {
-      "xg": 1.67,
-      "shots": 12.68,
-      "sot": 4.37,
-      "corners": 5.79,
-      "cards": 1.95
+      "xg": 1.14,
+      "shots": 9.5,
+      "sot": 2.5,
+      "corners": 4.5,
+      "cards": 1.25
     }
   },
-  "Wolverhampton Wanderers": {
+  "Coventry": {
     "home": {
-      "xg": 1.56,
-      "shots": 11.37,
-      "sot": 4.32,
-      "corners": 3.89,
-      "cards": 1.89
+      "xg": 1.58,
+      "shots": 11.75,
+      "sot": 4.25,
+      "corners": 4.25,
+      "cards": 0.75
     },
     "away": {
-      "xg": 1.52,
-      "shots": 11.32,
-      "sot": 4.11,
-      "corners": 3.95,
-      "cards": 2.11
+      "xg": 1.06,
+      "shots": 9.5,
+      "sot": 2.0,
+      "corners": 3.25,
+      "cards": 1.5
+    }
+  },
+  "Hull": {
+    "home": {
+      "xg": 1.36,
+      "shots": 10.0,
+      "sot": 3.75,
+      "corners": 4.0,
+      "cards": 1.5
+    },
+    "away": {
+      "xg": 1.35,
+      "shots": 11.75,
+      "sot": 2.75,
+      "corners": 3.75,
+      "cards": 3.75
+    }
+  },
+  "Manchester United": {
+    "home": {
+      "xg": 2.42,
+      "shots": 19.5,
+      "sot": 5.75,
+      "corners": 5.75,
+      "cards": 2.5
+    },
+    "away": {
+      "xg": 2.18,
+      "shots": 19.25,
+      "sot": 4.25,
+      "corners": 6.25,
+      "cards": 1.5
     }
   },
   "Everton": {
     "home": {
-      "xg": 1.51,
-      "shots": 11.16,
-      "sot": 4.11,
-      "corners": 4.26,
-      "cards": 2.21
+      "xg": 1.9,
+      "shots": 15.25,
+      "sot": 4.5,
+      "corners": 4.25,
+      "cards": 2.0
     },
     "away": {
-      "xg": 1.33,
-      "shots": 10.16,
-      "sot": 3.47,
-      "corners": 3.95,
-      "cards": 2.11
-    }
-  },
-  "Brighton": {
-    "home": {
-      "xg": 1.99,
-      "shots": 15.26,
-      "sot": 5.11,
-      "corners": 4.79,
-      "cards": 1.79
-    },
-    "away": {
-      "xg": 1.77,
-      "shots": 12.79,
-      "sot": 4.95,
-      "corners": 5.16,
-      "cards": 2.16
-    }
-  },
-  "Newcastle United": {
-    "home": {
-      "xg": 2.02,
-      "shots": 15.58,
-      "sot": 5.16,
-      "corners": 6.21,
-      "cards": 2.11
-    },
-    "away": {
-      "xg": 1.56,
+      "xg": 1.71,
       "shots": 12.0,
-      "sot": 4.0,
-      "corners": 5.26,
-      "cards": 1.53
-    }
-  },
-  "Southampton": {
-    "home": {
-      "xg": 1.14,
-      "shots": 8.58,
-      "sot": 3.0,
-      "corners": 3.16,
-      "cards": 2.11
-    },
-    "away": {
-      "xg": 1.18,
-      "shots": 9.47,
-      "sot": 2.84,
-      "corners": 4.84,
-      "cards": 2.74
-    }
-  },
-  "Nottingham Forest": {
-    "home": {
-      "xg": 1.65,
-      "shots": 12.32,
-      "sot": 4.42,
-      "corners": 4.26,
-      "cards": 1.58
-    },
-    "away": {
-      "xg": 1.61,
-      "shots": 12.05,
-      "sot": 4.32,
-      "corners": 4.16,
-      "cards": 3.0
-    }
-  },
-  "Bournemouth": {
-    "home": {
-      "xg": 2.12,
-      "shots": 16.26,
-      "sot": 5.47,
-      "corners": 6.32,
-      "cards": 2.37
-    },
-    "away": {
-      "xg": 1.91,
-      "shots": 14.26,
-      "sot": 5.16,
-      "corners": 5.74,
-      "cards": 2.89
-    }
-  },
-  "West Ham": {
-    "home": {
-      "xg": 1.5,
-      "shots": 11.74,
-      "sot": 3.74,
-      "corners": 4.63,
-      "cards": 2.32
-    },
-    "away": {
-      "xg": 1.66,
-      "shots": 13.32,
-      "sot": 3.95,
-      "corners": 3.47,
-      "cards": 1.95
-    }
-  },
-  "Aston Villa": {
-    "home": {
-      "xg": 2.07,
-      "shots": 15.42,
-      "sot": 5.58,
-      "corners": 7.47,
-      "cards": 1.68
-    },
-    "away": {
-      "xg": 1.31,
-      "shots": 10.05,
-      "sot": 3.37,
-      "corners": 4.74,
-      "cards": 2.32
-    }
-  },
-  "Brentford": {
-    "home": {
-      "xg": 1.87,
-      "shots": 12.95,
-      "sot": 5.53,
-      "corners": 5.16,
-      "cards": 1.63
-    },
-    "away": {
-      "xg": 1.44,
-      "shots": 10.26,
-      "sot": 4.16,
-      "corners": 4.05,
-      "cards": 1.68
+      "sot": 5.0,
+      "corners": 5.5,
+      "cards": 1.75
     }
   },
   "Crystal Palace": {
     "home": {
-      "xg": 1.87,
-      "shots": 14.32,
-      "sot": 4.84,
-      "corners": 4.58,
-      "cards": 2.16
+      "xg": 1.6,
+      "shots": 12.5,
+      "sot": 4.0,
+      "corners": 5.0,
+      "cards": 2.0
     },
     "away": {
-      "xg": 1.77,
-      "shots": 12.84,
-      "sot": 4.95,
-      "corners": 4.47,
-      "cards": 2.0
+      "xg": 1.29,
+      "shots": 9.5,
+      "sot": 3.5,
+      "corners": 2.25,
+      "cards": 1.25
     }
   },
-  "Chelsea": {
+  "Ipswich": {
     "home": {
-      "xg": 2.43,
-      "shots": 17.79,
-      "sot": 6.68,
-      "corners": 6.47,
-      "cards": 2.58
+      "xg": 1.44,
+      "shots": 10.5,
+      "sot": 4.0,
+      "corners": 2.25,
+      "cards": 1.0
+    },
+    "away": {
+      "xg": 1.51,
+      "shots": 10.5,
+      "sot": 4.5,
+      "corners": 3.5,
+      "cards": 2.5
+    }
+  },
+  "Sunderland": {
+    "home": {
+      "xg": 1.54,
+      "shots": 12.75,
+      "sot": 3.5,
+      "corners": 4.5,
+      "cards": 2.0
+    },
+    "away": {
+      "xg": 1.57,
+      "shots": 11.25,
+      "sot": 4.5,
+      "corners": 4.0,
+      "cards": 2.25
+    }
+  },
+  "Nottingham Forest": {
+    "home": {
+      "xg": 1.58,
+      "shots": 15.5,
+      "sot": 2.25,
+      "corners": 4.75,
+      "cards": 1.75
+    },
+    "away": {
+      "xg": 2.29,
+      "shots": 18.75,
+      "sot": 5.25,
+      "corners": 4.75,
+      "cards": 2.5
+    }
+  },
+  "Leeds": {
+    "home": {
+      "xg": 1.6,
+      "shots": 13.0,
+      "sot": 3.75,
+      "corners": 4.0,
+      "cards": 1.25
+    },
+    "away": {
+      "xg": 1.5,
+      "shots": 10.75,
+      "sot": 4.25,
+      "corners": 4.25,
+      "cards": 2.5
+    }
+  },
+  "Brentford": {
+    "home": {
+      "xg": 1.9,
+      "shots": 15.25,
+      "sot": 4.5,
+      "corners": 4.5,
+      "cards": 3.0
     },
     "away": {
       "xg": 1.8,
-      "shots": 13.53,
-      "sot": 4.79,
-      "corners": 5.95,
-      "cards": 2.68
-    }
-  },
-  "Manchester City": {
-    "home": {
-      "xg": 2.23,
-      "shots": 16.74,
-      "sot": 5.95,
-      "corners": 7.0,
-      "cards": 1.79
-    },
-    "away": {
-      "xg": 2.04,
-      "shots": 15.21,
-      "sot": 5.47,
-      "corners": 6.32,
-      "cards": 1.32
-    }
-  },
-  "Leicester": {
-    "home": {
-      "xg": 1.17,
-      "shots": 9.26,
-      "sot": 2.89,
-      "corners": 4.21,
-      "cards": 2.21
-    },
-    "away": {
-      "xg": 1.11,
-      "shots": 8.37,
-      "sot": 2.95,
-      "corners": 3.21,
-      "cards": 2.37
+      "shots": 14.5,
+      "sot": 4.25,
+      "corners": 3.75,
+      "cards": 2.75
     }
   },
   "Tottenham": {
     "home": {
-      "xg": 1.92,
-      "shots": 14.16,
-      "sot": 5.26,
-      "corners": 7.16,
-      "cards": 1.63
+      "xg": 2.09,
+      "shots": 16.75,
+      "sot": 5.0,
+      "corners": 7.25,
+      "cards": 0.75
     },
     "away": {
-      "xg": 1.63,
-      "shots": 12.0,
-      "sot": 4.47,
-      "corners": 5.63,
-      "cards": 2.11
+      "xg": 1.35,
+      "shots": 11.75,
+      "sot": 2.75,
+      "corners": 5.75,
+      "cards": 2.5
     }
   },
-  "Genoa": {
+  "Brighton": {
     "home": {
-      "xg": 1.53,
-      "shots": 11.53,
-      "sot": 4.05,
-      "corners": 4.63,
-      "cards": 1.89
+      "xg": 2.44,
+      "shots": 18.75,
+      "sot": 6.25,
+      "corners": 6.25,
+      "cards": 2.75
     },
     "away": {
-      "xg": 1.05,
-      "shots": 8.68,
-      "sot": 2.37,
-      "corners": 3.53,
-      "cards": 1.89
+      "xg": 2.02,
+      "shots": 16.75,
+      "sot": 4.5,
+      "corners": 4.25,
+      "cards": 1.75
+    }
+  },
+  "Aston Villa": {
+    "home": {
+      "xg": 1.36,
+      "shots": 10.5,
+      "sot": 3.5,
+      "corners": 3.5,
+      "cards": 2.75
+    },
+    "away": {
+      "xg": 1.35,
+      "shots": 12.25,
+      "sot": 2.5,
+      "corners": 3.0,
+      "cards": 2.0
+    }
+  },
+  "Manchester City": {
+    "home": {
+      "xg": 2.08,
+      "shots": 15.75,
+      "sot": 5.5,
+      "corners": 5.0,
+      "cards": 0.75
+    },
+    "away": {
+      "xg": 1.91,
+      "shots": 13.5,
+      "sot": 5.5,
+      "corners": 6.5,
+      "cards": 2.75
+    }
+  },
+  "Bournemouth": {
+    "home": {
+      "xg": 2.36,
+      "shots": 18.75,
+      "sot": 5.75,
+      "corners": 5.0,
+      "cards": 3.0
+    },
+    "away": {
+      "xg": 1.46,
+      "shots": 10.25,
+      "sot": 4.25,
+      "corners": 4.25,
+      "cards": 2.5
+    }
+  },
+  "Newcastle United": {
+    "home": {
+      "xg": 1.43,
+      "shots": 12.25,
+      "sot": 3.0,
+      "corners": 3.5,
+      "cards": 3.5
+    },
+    "away": {
+      "xg": 1.5,
+      "shots": 11.75,
+      "sot": 3.75,
+      "corners": 5.5,
+      "cards": 2.0
+    }
+  },
+  "Liverpool": {
+    "home": {
+      "xg": 1.7,
+      "shots": 13.25,
+      "sot": 4.25,
+      "corners": 4.25,
+      "cards": 2.25
+    },
+    "away": {
+      "xg": 2.23,
+      "shots": 17.5,
+      "sot": 5.5,
+      "corners": 5.25,
+      "cards": 2.75
+    }
+  },
+  "Fulham": {
+    "home": {
+      "xg": 2.28,
+      "shots": 17.25,
+      "sot": 6.0,
+      "corners": 6.5,
+      "cards": 2.0
+    },
+    "away": {
+      "xg": 1.37,
+      "shots": 11.5,
+      "sot": 3.0,
+      "corners": 5.75,
+      "cards": 2.25
+    }
+  },
+  "Chelsea": {
+    "home": {
+      "xg": 1.78,
+      "shots": 11.5,
+      "sot": 5.75,
+      "corners": 4.75,
+      "cards": 1.75
+    },
+    "away": {
+      "xg": 1.97,
+      "shots": 15.25,
+      "sot": 5.0,
+      "corners": 6.5,
+      "cards": 2.75
     }
   },
   "Inter": {
     "home": {
-      "xg": 2.11,
-      "shots": 16.53,
-      "sot": 5.26,
-      "corners": 7.0,
-      "cards": 1.21
+      "xg": 3.2,
+      "shots": 24.2,
+      "sot": 8.4,
+      "corners": 6.4,
+      "cards": 0.8
     },
     "away": {
-      "xg": 1.82,
-      "shots": 13.53,
-      "sot": 4.95,
-      "corners": 4.63,
-      "cards": 1.84
-    }
-  },
-  "Parma": {
-    "home": {
-      "xg": 1.52,
-      "shots": 11.53,
-      "sot": 4.0,
-      "corners": 4.05,
-      "cards": 2.05
-    },
-    "away": {
-      "xg": 1.43,
-      "shots": 10.74,
-      "sot": 3.79,
-      "corners": 4.79,
-      "cards": 2.11
-    }
-  },
-  "Fiorentina": {
-    "home": {
-      "xg": 1.59,
-      "shots": 11.32,
-      "sot": 4.58,
-      "corners": 4.0,
-      "cards": 1.95
-    },
-    "away": {
-      "xg": 1.56,
-      "shots": 11.26,
-      "sot": 4.37,
-      "corners": 3.74,
-      "cards": 2.47
-    }
-  },
-  "Empoli": {
-    "home": {
-      "xg": 1.14,
-      "shots": 9.05,
-      "sot": 2.74,
-      "corners": 4.42,
-      "cards": 1.42
-    },
-    "away": {
-      "xg": 1.27,
-      "shots": 10.16,
-      "sot": 3.05,
-      "corners": 4.53,
-      "cards": 2.32
+      "xg": 2.42,
+      "shots": 20.0,
+      "sot": 5.5,
+      "corners": 5.0,
+      "cards": 2.25
     }
   },
   "Monza": {
     "home": {
-      "xg": 1.28,
-      "shots": 10.47,
-      "sot": 2.95,
-      "corners": 3.74,
-      "cards": 2.26
-    },
-    "away": {
-      "xg": 0.94,
-      "shots": 7.05,
-      "sot": 2.53,
-      "corners": 3.42,
-      "cards": 2.63
-    }
-  },
-  "AC Milan": {
-    "home": {
-      "xg": 1.97,
-      "shots": 15.32,
-      "sot": 4.95,
-      "corners": 6.0,
-      "cards": 1.68
-    },
-    "away": {
-      "xg": 1.93,
+      "xg": 1.95,
       "shots": 14.0,
-      "sot": 5.37,
-      "corners": 5.42,
-      "cards": 2.21
-    }
-  },
-  "Torino": {
-    "home": {
-      "xg": 1.35,
-      "shots": 10.89,
-      "sot": 3.21,
-      "corners": 4.58,
-      "cards": 1.74
+      "sot": 5.5,
+      "corners": 3.5,
+      "cards": 2.25
     },
     "away": {
-      "xg": 1.29,
-      "shots": 9.37,
-      "sot": 3.58,
-      "corners": 3.74,
-      "cards": 2.63
-    }
-  },
-  "Bologna": {
-    "home": {
-      "xg": 2.0,
-      "shots": 15.58,
-      "sot": 5.05,
-      "corners": 6.42,
-      "cards": 1.74
-    },
-    "away": {
-      "xg": 1.54,
-      "shots": 11.47,
-      "sot": 4.16,
-      "corners": 3.53,
-      "cards": 1.68
+      "xg": 1.85,
+      "shots": 12.6,
+      "sot": 5.6,
+      "corners": 4.4,
+      "cards": 1.2
     }
   },
   "Udinese": {
     "home": {
-      "xg": 1.54,
-      "shots": 12.05,
-      "sot": 3.84,
-      "corners": 4.84,
-      "cards": 2.0
+      "xg": 1.89,
+      "shots": 15.8,
+      "sot": 4.2,
+      "corners": 5.0,
+      "cards": 2.4
     },
     "away": {
-      "xg": 1.43,
-      "shots": 10.89,
-      "sot": 3.74,
-      "corners": 4.53,
-      "cards": 2.68
-    }
-  },
-  "Hellas Verona": {
-    "home": {
-      "xg": 1.26,
-      "shots": 10.47,
-      "sot": 2.79,
-      "corners": 4.79,
-      "cards": 3.0
-    },
-    "away": {
-      "xg": 1.09,
-      "shots": 8.84,
-      "sot": 2.53,
-      "corners": 3.21,
-      "cards": 2.42
-    }
-  },
-  "Napoli": {
-    "home": {
-      "xg": 2.06,
-      "shots": 16.32,
-      "sot": 5.0,
-      "corners": 6.84,
-      "cards": 1.05
-    },
-    "away": {
-      "xg": 1.33,
-      "shots": 10.26,
-      "sot": 3.37,
-      "corners": 4.16,
-      "cards": 1.37
-    }
-  },
-  "Cagliari": {
-    "home": {
-      "xg": 1.65,
-      "shots": 13.47,
-      "sot": 3.79,
-      "corners": 5.74,
-      "cards": 1.26
-    },
-    "away": {
-      "xg": 1.08,
-      "shots": 8.63,
-      "sot": 2.58,
-      "corners": 3.79,
-      "cards": 2.47
-    }
-  },
-  "Roma": {
-    "home": {
-      "xg": 1.82,
-      "shots": 13.95,
-      "sot": 4.68,
-      "corners": 4.37,
-      "cards": 1.53
-    },
-    "away": {
-      "xg": 1.7,
-      "shots": 12.84,
-      "sot": 4.47,
-      "corners": 4.58,
-      "cards": 1.89
-    }
-  },
-  "Lazio": {
-    "home": {
-      "xg": 2.03,
-      "shots": 15.26,
-      "sot": 5.42,
-      "corners": 6.32,
-      "cards": 2.53
-    },
-    "away": {
-      "xg": 1.79,
-      "shots": 12.95,
-      "sot": 5.05,
-      "corners": 5.74,
-      "cards": 2.68
-    }
-  },
-  "Venezia": {
-    "home": {
-      "xg": 1.45,
-      "shots": 10.89,
-      "sot": 3.89,
-      "corners": 4.0,
-      "cards": 2.05
-    },
-    "away": {
-      "xg": 1.17,
-      "shots": 9.11,
-      "sot": 2.95,
-      "corners": 3.53,
-      "cards": 2.05
-    }
-  },
-  "Lecce": {
-    "home": {
-      "xg": 1.57,
-      "shots": 12.95,
-      "sot": 3.53,
-      "corners": 5.16,
-      "cards": 1.42
-    },
-    "away": {
-      "xg": 1.33,
-      "shots": 10.84,
-      "sot": 3.11,
-      "corners": 3.53,
-      "cards": 2.05
-    }
-  },
-  "Atalanta": {
-    "home": {
-      "xg": 2.0,
-      "shots": 14.84,
-      "sot": 5.42,
-      "corners": 5.63,
-      "cards": 1.47
-    },
-    "away": {
-      "xg": 1.82,
-      "shots": 13.79,
-      "sot": 4.79,
-      "corners": 4.53,
-      "cards": 2.11
-    }
-  },
-  "Juventus": {
-    "home": {
-      "xg": 2.06,
-      "shots": 15.53,
-      "sot": 5.42,
-      "corners": 5.84,
-      "cards": 1.84
-    },
-    "away": {
-      "xg": 1.6,
-      "shots": 11.47,
-      "sot": 4.58,
-      "corners": 4.16,
-      "cards": 1.79
+      "xg": 1.66,
+      "shots": 13.25,
+      "sot": 4.0,
+      "corners": 3.25,
+      "cards": 1.0
     }
   },
   "Como": {
     "home": {
-      "xg": 1.96,
-      "shots": 14.68,
-      "sot": 5.21,
-      "corners": 5.0,
-      "cards": 2.26
+      "xg": 2.5,
+      "shots": 20.67,
+      "sot": 5.67,
+      "corners": 7.67,
+      "cards": 1.67
     },
     "away": {
-      "xg": 1.65,
-      "shots": 12.58,
-      "sot": 4.32,
-      "corners": 3.79,
-      "cards": 2.68
+      "xg": 2.68,
+      "shots": 20.33,
+      "sot": 7.0,
+      "corners": 6.67,
+      "cards": 1.0
+    }
+  },
+  "Genoa": {
+    "home": {
+      "xg": 1.41,
+      "shots": 11.67,
+      "sot": 3.17,
+      "corners": 4.83,
+      "cards": 2.33
+    },
+    "away": {
+      "xg": 1.12,
+      "shots": 9.67,
+      "sot": 2.33,
+      "corners": 3.33,
+      "cards": 2.67
+    }
+  },
+  "Napoli": {
+    "home": {
+      "xg": 2.04,
+      "shots": 15.25,
+      "sot": 5.5,
+      "corners": 5.0,
+      "cards": 1.0
+    },
+    "away": {
+      "xg": 2.38,
+      "shots": 17.4,
+      "sot": 6.6,
+      "corners": 5.8,
+      "cards": 0.6
+    }
+  },
+  "Parma": {
+    "home": {
+      "xg": 1.44,
+      "shots": 11.6,
+      "sot": 3.4,
+      "corners": 4.0,
+      "cards": 1.8
+    },
+    "away": {
+      "xg": 1.19,
+      "shots": 8.75,
+      "sot": 3.25,
+      "corners": 2.5,
+      "cards": 1.0
+    }
+  },
+  "Cagliari": {
+    "home": {
+      "xg": 1.21,
+      "shots": 9.5,
+      "sot": 3.0,
+      "corners": 4.25,
+      "cards": 2.0
+    },
+    "away": {
+      "xg": 1.69,
+      "shots": 11.8,
+      "sot": 5.0,
+      "corners": 4.0,
+      "cards": 1.0
+    }
+  },
+  "Frosinone": {
+    "home": {
+      "xg": 2.31,
+      "shots": 16.75,
+      "sot": 6.5,
+      "corners": 5.0,
+      "cards": 1.75
+    },
+    "away": {
+      "xg": 2.44,
+      "shots": 19.75,
+      "sot": 5.75,
+      "corners": 6.75,
+      "cards": 2.25
+    }
+  },
+  "Juventus": {
+    "home": {
+      "xg": 1.83,
+      "shots": 14.5,
+      "sot": 4.5,
+      "corners": 6.5,
+      "cards": 1.0
+    },
+    "away": {
+      "xg": 2.25,
+      "shots": 17.2,
+      "sot": 5.8,
+      "corners": 8.6,
+      "cards": 1.2
+    }
+  },
+  "Venezia": {
+    "home": {
+      "xg": 1.79,
+      "shots": 13.4,
+      "sot": 4.8,
+      "corners": 3.4,
+      "cards": 2.2
+    },
+    "away": {
+      "xg": 1.8,
+      "shots": 15.5,
+      "sot": 3.75,
+      "corners": 5.5,
+      "cards": 2.25
+    }
+  },
+  "Lecce": {
+    "home": {
+      "xg": 1.54,
+      "shots": 12.25,
+      "sot": 3.75,
+      "corners": 5.25,
+      "cards": 2.0
+    },
+    "away": {
+      "xg": 1.73,
+      "shots": 11.25,
+      "sot": 5.5,
+      "corners": 3.75,
+      "cards": 1.75
+    }
+  },
+  "Atalanta": {
+    "home": {
+      "xg": 2.37,
+      "shots": 17.2,
+      "sot": 6.6,
+      "corners": 4.8,
+      "cards": 0.6
+    },
+    "away": {
+      "xg": 1.17,
+      "shots": 9.67,
+      "sot": 2.67,
+      "corners": 2.67,
+      "cards": 2.0
+    }
+  },
+  "Sassuolo": {
+    "home": {
+      "xg": 1.63,
+      "shots": 12.0,
+      "sot": 4.5,
+      "corners": 3.0,
+      "cards": 2.0
+    },
+    "away": {
+      "xg": 2.09,
+      "shots": 15.6,
+      "sot": 5.6,
+      "corners": 4.8,
+      "cards": 1.0
+    }
+  },
+  "Torino": {
+    "home": {
+      "xg": 1.5,
+      "shots": 11.2,
+      "sot": 4.0,
+      "corners": 3.0,
+      "cards": 0.4
+    },
+    "away": {
+      "xg": 1.33,
+      "shots": 10.0,
+      "sot": 3.5,
+      "corners": 4.0,
+      "cards": 1.5
+    }
+  },
+  "AC Milan": {
+    "home": {
+      "xg": 1.57,
+      "shots": 11.25,
+      "sot": 4.5,
+      "corners": 2.0,
+      "cards": 0.5
+    },
+    "away": {
+      "xg": 1.84,
+      "shots": 13.6,
+      "sot": 5.0,
+      "corners": 3.8,
+      "cards": 2.6
+    }
+  },
+  "Bologna": {
+    "home": {
+      "xg": 1.7,
+      "shots": 14.25,
+      "sot": 3.75,
+      "corners": 5.25,
+      "cards": 2.75
+    },
+    "away": {
+      "xg": 1.38,
+      "shots": 9.8,
+      "sot": 4.0,
+      "corners": 2.8,
+      "cards": 1.2
+    }
+  },
+  "Lazio": {
+    "home": {
+      "xg": 1.97,
+      "shots": 15.25,
+      "sot": 5.0,
+      "corners": 5.25,
+      "cards": 1.75
+    },
+    "away": {
+      "xg": 1.72,
+      "shots": 13.2,
+      "sot": 4.4,
+      "corners": 4.8,
+      "cards": 1.6
+    }
+  },
+  "Roma": {
+    "home": {
+      "xg": 2.79,
+      "shots": 21.8,
+      "sot": 7.0,
+      "corners": 6.4,
+      "cards": 1.6
+    },
+    "away": {
+      "xg": 1.95,
+      "shots": 15.5,
+      "sot": 4.75,
+      "corners": 5.5,
+      "cards": 2.75
+    }
+  },
+  "Fiorentina": {
+    "home": {
+      "xg": 2.29,
+      "shots": 18.75,
+      "sot": 5.25,
+      "corners": 6.5,
+      "cards": 2.0
+    },
+    "away": {
+      "xg": 1.67,
+      "shots": 12.0,
+      "sot": 4.75,
+      "corners": 3.0,
+      "cards": 2.25
     }
   }
 }
