@@ -1,14 +1,14 @@
 {
   "Arsenal": {
     "home": {
-      "xg": 2.32,
+      "xg": 1.91,
       "shots": 17.25,
       "sot": 6.25,
       "corners": 6.75,
       "cards": 1.25
     },
     "away": {
-      "xg": 1.14,
+      "xg": 0.66,
       "shots": 9.5,
       "sot": 2.5,
       "corners": 4.5,
@@ -17,14 +17,14 @@
   },
   "Coventry": {
     "home": {
-      "xg": 1.58,
+      "xg": 1.3,
       "shots": 11.75,
       "sot": 4.25,
       "corners": 4.25,
       "cards": 0.75
     },
     "away": {
-      "xg": 1.06,
+      "xg": 0.55,
       "shots": 9.5,
       "sot": 2.0,
       "corners": 3.25,
@@ -33,14 +33,14 @@
   },
   "Hull": {
     "home": {
-      "xg": 1.36,
+      "xg": 1.14,
       "shots": 10.0,
       "sot": 3.75,
       "corners": 4.0,
       "cards": 1.5
     },
     "away": {
-      "xg": 1.35,
+      "xg": 0.74,
       "shots": 11.75,
       "sot": 2.75,
       "corners": 3.75,
@@ -49,14 +49,14 @@
   },
   "Manchester United": {
     "home": {
-      "xg": 2.42,
+      "xg": 1.83,
       "shots": 19.5,
       "sot": 5.75,
       "corners": 5.75,
       "cards": 2.5
     },
     "away": {
-      "xg": 2.18,
+      "xg": 1.16,
       "shots": 19.25,
       "sot": 4.25,
       "corners": 6.25,
@@ -65,14 +65,14 @@
   },
   "Everton": {
     "home": {
-      "xg": 1.9,
+      "xg": 1.43,
       "shots": 15.25,
       "sot": 4.5,
       "corners": 4.25,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.71,
+      "xg": 1.21,
       "shots": 12.0,
       "sot": 5.0,
       "corners": 5.5,
@@ -81,14 +81,14 @@
   },
   "Crystal Palace": {
     "home": {
-      "xg": 1.6,
+      "xg": 1.25,
       "shots": 12.5,
       "sot": 4.0,
       "corners": 5.0,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.29,
+      "xg": 0.86,
       "shots": 9.5,
       "sot": 3.5,
       "corners": 2.25,
@@ -97,14 +97,14 @@
   },
   "Ipswich": {
     "home": {
-      "xg": 1.44,
+      "xg": 1.21,
       "shots": 10.5,
       "sot": 4.0,
       "corners": 2.25,
       "cards": 1.0
     },
     "away": {
-      "xg": 1.51,
+      "xg": 1.08,
       "shots": 10.5,
       "sot": 4.5,
       "corners": 3.5,
@@ -113,14 +113,14 @@
   },
   "Sunderland": {
     "home": {
-      "xg": 1.54,
+      "xg": 1.13,
       "shots": 12.75,
       "sot": 3.5,
       "corners": 4.5,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.57,
+      "xg": 1.09,
       "shots": 11.25,
       "sot": 4.5,
       "corners": 4.0,
@@ -129,14 +129,14 @@
   },
   "Nottingham Forest": {
     "home": {
-      "xg": 1.58,
+      "xg": 0.87,
       "shots": 15.5,
       "sot": 2.25,
       "corners": 4.75,
       "cards": 1.75
     },
     "away": {
-      "xg": 2.29,
+      "xg": 1.36,
       "shots": 18.75,
       "sot": 5.25,
       "corners": 4.75,
@@ -145,14 +145,14 @@
   },
   "Leeds": {
     "home": {
-      "xg": 1.6,
+      "xg": 1.2,
       "shots": 13.0,
       "sot": 3.75,
       "corners": 4.0,
       "cards": 1.25
     },
     "away": {
-      "xg": 1.5,
+      "xg": 1.03,
       "shots": 10.75,
       "sot": 4.25,
       "corners": 4.25,
@@ -161,14 +161,14 @@
   },
   "Brentford": {
     "home": {
-      "xg": 1.9,
+      "xg": 1.43,
       "shots": 15.25,
       "sot": 4.5,
       "corners": 4.5,
       "cards": 3.0
     },
     "away": {
-      "xg": 1.8,
+      "xg": 1.09,
       "shots": 14.5,
       "sot": 4.25,
       "corners": 3.75,
@@ -177,14 +177,14 @@
   },
   "Tottenham": {
     "home": {
-      "xg": 2.09,
+      "xg": 1.59,
       "shots": 16.75,
       "sot": 5.0,
       "corners": 7.25,
       "cards": 0.75
     },
     "away": {
-      "xg": 1.35,
+      "xg": 0.74,
       "shots": 11.75,
       "sot": 2.75,
       "corners": 5.75,
@@ -193,14 +193,14 @@
   },
   "Brighton": {
     "home": {
-      "xg": 2.44,
+      "xg": 1.94,
       "shots": 18.75,
       "sot": 6.25,
       "corners": 6.25,
       "cards": 2.75
     },
     "away": {
-      "xg": 2.02,
+      "xg": 1.17,
       "shots": 16.75,
       "sot": 4.5,
       "corners": 4.25,
@@ -209,14 +209,14 @@
   },
   "Aston Villa": {
     "home": {
-      "xg": 1.36,
+      "xg": 1.08,
       "shots": 10.5,
       "sot": 3.5,
       "corners": 3.5,
       "cards": 2.75
     },
     "away": {
-      "xg": 1.35,
+      "xg": 0.7,
       "shots": 12.25,
       "sot": 2.5,
       "corners": 3.0,
@@ -225,14 +225,14 @@
   },
   "Manchester City": {
     "home": {
-      "xg": 2.08,
+      "xg": 1.69,
       "shots": 15.75,
       "sot": 5.5,
       "corners": 5.0,
       "cards": 0.75
     },
     "away": {
-      "xg": 1.91,
+      "xg": 1.33,
       "shots": 13.5,
       "sot": 5.5,
       "corners": 6.5,
@@ -241,14 +241,14 @@
   },
   "Bournemouth": {
     "home": {
-      "xg": 2.36,
+      "xg": 1.81,
       "shots": 18.75,
       "sot": 5.75,
       "corners": 5.0,
       "cards": 3.0
     },
     "away": {
-      "xg": 1.46,
+      "xg": 1.03,
       "shots": 10.25,
       "sot": 4.25,
       "corners": 4.25,
@@ -257,14 +257,14 @@
   },
   "Newcastle United": {
     "home": {
-      "xg": 1.43,
+      "xg": 1.0,
       "shots": 12.25,
       "sot": 3.0,
       "corners": 3.5,
       "cards": 3.5
     },
     "away": {
-      "xg": 1.5,
+      "xg": 0.94,
       "shots": 11.75,
       "sot": 3.75,
       "corners": 5.5,
@@ -273,14 +273,14 @@
   },
   "Liverpool": {
     "home": {
-      "xg": 1.7,
+      "xg": 1.33,
       "shots": 13.25,
       "sot": 4.25,
       "corners": 4.25,
       "cards": 2.25
     },
     "away": {
-      "xg": 2.23,
+      "xg": 1.39,
       "shots": 17.5,
       "sot": 5.5,
       "corners": 5.25,
@@ -289,14 +289,14 @@
   },
   "Fulham": {
     "home": {
-      "xg": 2.28,
+      "xg": 1.85,
       "shots": 17.25,
       "sot": 6.0,
       "corners": 6.5,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.37,
+      "xg": 0.79,
       "shots": 11.5,
       "sot": 3.0,
       "corners": 5.75,
@@ -305,14 +305,14 @@
   },
   "Chelsea": {
     "home": {
-      "xg": 1.78,
+      "xg": 1.67,
       "shots": 11.5,
       "sot": 5.75,
       "corners": 4.75,
       "cards": 1.75
     },
     "away": {
-      "xg": 1.97,
+      "xg": 1.25,
       "shots": 15.25,
       "sot": 5.0,
       "corners": 6.5,
@@ -321,14 +321,14 @@
   },
   "Inter": {
     "home": {
-      "xg": 3.2,
+      "xg": 2.58,
       "shots": 24.2,
       "sot": 8.4,
       "corners": 6.4,
       "cards": 0.8
     },
     "away": {
-      "xg": 2.42,
+      "xg": 1.43,
       "shots": 20.0,
       "sot": 5.5,
       "corners": 5.0,
@@ -337,14 +337,14 @@
   },
   "Monza": {
     "home": {
-      "xg": 1.95,
+      "xg": 1.66,
       "shots": 14.0,
       "sot": 5.5,
       "corners": 3.5,
       "cards": 2.25
     },
     "away": {
-      "xg": 1.85,
+      "xg": 1.34,
       "shots": 12.6,
       "sot": 5.6,
       "corners": 4.4,
@@ -353,14 +353,14 @@
   },
   "Udinese": {
     "home": {
-      "xg": 1.89,
+      "xg": 1.37,
       "shots": 15.8,
       "sot": 4.2,
       "corners": 5.0,
       "cards": 2.4
     },
     "away": {
-      "xg": 1.66,
+      "xg": 1.02,
       "shots": 13.25,
       "sot": 4.0,
       "corners": 3.25,
@@ -369,14 +369,14 @@
   },
   "Como": {
     "home": {
-      "xg": 2.5,
+      "xg": 1.83,
       "shots": 20.67,
       "sot": 5.67,
       "corners": 7.67,
       "cards": 1.67
     },
     "away": {
-      "xg": 2.68,
+      "xg": 1.74,
       "shots": 20.33,
       "sot": 7.0,
       "corners": 6.67,
@@ -385,14 +385,14 @@
   },
   "Genoa": {
     "home": {
-      "xg": 1.41,
+      "xg": 1.03,
       "shots": 11.67,
       "sot": 3.17,
       "corners": 4.83,
       "cards": 2.33
     },
     "away": {
-      "xg": 1.12,
+      "xg": 0.62,
       "shots": 9.67,
       "sot": 2.33,
       "corners": 3.33,
@@ -401,14 +401,14 @@
   },
   "Napoli": {
     "home": {
-      "xg": 2.04,
+      "xg": 1.68,
       "shots": 15.25,
       "sot": 5.5,
       "corners": 5.0,
       "cards": 1.0
     },
     "away": {
-      "xg": 2.38,
+      "xg": 1.61,
       "shots": 17.4,
       "sot": 6.6,
       "corners": 5.8,
@@ -417,14 +417,14 @@
   },
   "Parma": {
     "home": {
-      "xg": 1.44,
+      "xg": 1.08,
       "shots": 11.6,
       "sot": 3.4,
       "corners": 4.0,
       "cards": 1.8
     },
     "away": {
-      "xg": 1.19,
+      "xg": 0.8,
       "shots": 8.75,
       "sot": 3.25,
       "corners": 2.5,
@@ -433,14 +433,14 @@
   },
   "Cagliari": {
     "home": {
-      "xg": 1.21,
+      "xg": 0.94,
       "shots": 9.5,
       "sot": 3.0,
       "corners": 4.25,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.69,
+      "xg": 1.2,
       "shots": 11.8,
       "sot": 5.0,
       "corners": 4.0,
@@ -449,14 +449,14 @@
   },
   "Frosinone": {
     "home": {
-      "xg": 2.31,
+      "xg": 1.96,
       "shots": 16.75,
       "sot": 6.5,
       "corners": 5.0,
       "cards": 1.75
     },
     "away": {
-      "xg": 2.44,
+      "xg": 1.47,
       "shots": 19.75,
       "sot": 5.75,
       "corners": 6.75,
@@ -465,14 +465,14 @@
   },
   "Juventus": {
     "home": {
-      "xg": 1.83,
+      "xg": 1.42,
       "shots": 14.5,
       "sot": 4.5,
       "corners": 6.5,
       "cards": 1.0
     },
     "away": {
-      "xg": 2.25,
+      "xg": 1.45,
       "shots": 17.2,
       "sot": 5.8,
       "corners": 8.6,
@@ -481,14 +481,14 @@
   },
   "Venezia": {
     "home": {
-      "xg": 1.79,
+      "xg": 1.47,
       "shots": 13.4,
       "sot": 4.8,
       "corners": 3.4,
       "cards": 2.2
     },
     "away": {
-      "xg": 1.8,
+      "xg": 1.0,
       "shots": 15.5,
       "sot": 3.75,
       "corners": 5.5,
@@ -497,14 +497,14 @@
   },
   "Lecce": {
     "home": {
-      "xg": 1.54,
+      "xg": 1.18,
       "shots": 12.25,
       "sot": 3.75,
       "corners": 5.25,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.73,
+      "xg": 1.3,
       "shots": 11.25,
       "sot": 5.5,
       "corners": 3.75,
@@ -513,14 +513,14 @@
   },
   "Atalanta": {
     "home": {
-      "xg": 2.37,
+      "xg": 1.99,
       "shots": 17.2,
       "sot": 6.6,
       "corners": 4.8,
       "cards": 0.6
     },
     "away": {
-      "xg": 1.17,
+      "xg": 0.69,
       "shots": 9.67,
       "sot": 2.67,
       "corners": 2.67,
@@ -529,14 +529,14 @@
   },
   "Sassuolo": {
     "home": {
-      "xg": 1.63,
+      "xg": 1.36,
       "shots": 12.0,
       "sot": 4.5,
       "corners": 3.0,
       "cards": 2.0
     },
     "away": {
-      "xg": 2.09,
+      "xg": 1.38,
       "shots": 15.6,
       "sot": 5.6,
       "corners": 4.8,
@@ -545,14 +545,14 @@
   },
   "Torino": {
     "home": {
-      "xg": 1.5,
+      "xg": 1.22,
       "shots": 11.2,
       "sot": 4.0,
       "corners": 3.0,
       "cards": 0.4
     },
     "away": {
-      "xg": 1.33,
+      "xg": 0.87,
       "shots": 10.0,
       "sot": 3.5,
       "corners": 4.0,
@@ -561,14 +561,14 @@
   },
   "AC Milan": {
     "home": {
-      "xg": 1.57,
+      "xg": 1.35,
       "shots": 11.25,
       "sot": 4.5,
       "corners": 2.0,
       "cards": 0.5
     },
     "away": {
-      "xg": 1.84,
+      "xg": 1.23,
       "shots": 13.6,
       "sot": 5.0,
       "corners": 3.8,
@@ -577,14 +577,14 @@
   },
   "Bologna": {
     "home": {
-      "xg": 1.7,
+      "xg": 1.22,
       "shots": 14.25,
       "sot": 3.75,
       "corners": 5.25,
       "cards": 2.75
     },
     "away": {
-      "xg": 1.38,
+      "xg": 0.97,
       "shots": 9.8,
       "sot": 4.0,
       "corners": 2.8,
@@ -593,14 +593,14 @@
   },
   "Lazio": {
     "home": {
-      "xg": 1.97,
+      "xg": 1.56,
       "shots": 15.25,
       "sot": 5.0,
       "corners": 5.25,
       "cards": 1.75
     },
     "away": {
-      "xg": 1.72,
+      "xg": 1.1,
       "shots": 13.2,
       "sot": 4.4,
       "corners": 4.8,
@@ -609,14 +609,14 @@
   },
   "Roma": {
     "home": {
-      "xg": 2.79,
+      "xg": 2.19,
       "shots": 21.8,
       "sot": 7.0,
       "corners": 6.4,
       "cards": 1.6
     },
     "away": {
-      "xg": 1.95,
+      "xg": 1.21,
       "shots": 15.5,
       "sot": 4.75,
       "corners": 5.5,
@@ -625,14 +625,14 @@
   },
   "Fiorentina": {
     "home": {
-      "xg": 2.29,
+      "xg": 1.69,
       "shots": 18.75,
       "sot": 5.25,
       "corners": 6.5,
       "cards": 2.0
     },
     "away": {
-      "xg": 1.67,
+      "xg": 1.15,
       "shots": 12.0,
       "sot": 4.75,
       "corners": 3.0,
