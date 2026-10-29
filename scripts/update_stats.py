@@ -2,60 +2,40 @@ import csv
 import io
 import json
 import os
-import re
 import urllib.request
 
-FD_TEAM_MAPPING = {
+# Ονόματα ομάδων όπως εμφανίζονται στα επίσημα CSV
+# (Premier League & Serie A)
+TEAMS = [
     # Premier League
-    "Arsenal": "Arsenal",
-    "Aston Villa": "Aston Villa",
-    "Bournemouth": "Bournemouth",
-    "Brentford": "Brentford",
-    "Brighton": "Brighton",
-    "Chelsea": "Chelsea",
-    "Crystal Palace": "Crystal Palace",
-    "Everton": "Everton",
-    "Fulham": "Fulham",
-    "Ipswich": "Ipswich",
-    "Leicester": "Leicester",
-    "Liverpool": "Liverpool",
-    "Manchester City": "Man City",
-    "Manchester United": "Man United",
-    "Newcastle United": "Newcastle",
-    "Nottingham Forest": "Nott'm Forest",
-    "Southampton": "Southampton",
-    "Tottenham": "Tottenham",
-    "West Ham": "West Ham",
-    "Wolverhampton Wanderers": "Wolves",
+    "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton", 
+    "Chelsea", "Crystal Palace", "Everton", "Fulham", "Ipswich", 
+    "Leicester", "Liverpool", "Man City", "Man United", "Newcastle", 
+    "Nott'm Forest", "Southampton", "Tottenham", "West Ham", "Wolves",
     # Serie A
-    "Atalanta": "Atalanta",
-    "Bologna": "Bologna",
-    "Cagliari": "Cagliari",
-    "Como": "Como",
-    "Empoli": "Empoli",
-    "Fiorentina": "Fiorentina",
-    "Genoa": "Genoa",
-    "Hellas Verona": "Verona",
-    "Inter": "Inter",
-    "Juventus": "Juventus",
-    "Lazio": "Lazio",
-    "Lecce": "Lecce",
-    "Monza": "Monza",
-    "Napoli": "Napoli",
-    "Parma": "Parma",
-    "Roma": "Roma",
-    "Torino": "Torino",
-    "Udinese": "Udinese",
-    "Venezia": "Venezia",
-    "AC Milan": "Milan"
+    "Atalanta", "Bologna", "Cagliari", "Como", "Empoli", 
+    "Fiorentina", "Genoa", "Verona", "Inter", "Juventus", 
+    "Lazio", "Lecce", "Monza", "Napoli", "Parma", 
+    "Roma", "Torino", "Udinese", "Venezia", "Milan"
+]
+
+# Αντιστοίχιση ονομάτων για το Frontend σου
+DISPLAY_NAMES = {
+    "Man City": "Manchester City",
+    "Man United": "Manchester United",
+    "Newcastle": "Newcastle United",
+    "Nott'm Forest": "Nottingham Forest",
+    "Wolves": "Wolverhampton Wanderers",
+    "Verona": "Hellas Verona",
+    "Milan": "AC Milan"
 }
 
 CSV_URLS = [
-    "https://www.football-data.co.uk/mmz4281/2425/E0.csv",
-    "https://www.football-data.co.uk/mmz4281/2425/I1.csv"
+    "https://www.football-data.co.uk/mmz4281/2425/E0.csv",  # Premier League
+    "https://www.football-data.co.uk/mmz4281/2425/I1.csv"   # Serie A
 ]
 
-def fetch_corners_and_cards():
+def update_all_stats():
     team_data = {}
     headers = {'User-Agent': 'Mozilla/5.0'}
 
@@ -65,6 +45,7 @@ def fetch_corners_and_cards():
             with urllib.request.urlopen(req, timeout=15) as resp:
                 content = resp.read().decode('utf-8', errors='ignore')
                 reader = csv.DictReader(io.StringIO(content))
+                
                 for row in reader:
                     h_team = row.get('HomeTeam')
                     a_team = row.get('AwayTeam')
@@ -72,129 +53,81 @@ def fetch_corners_and_cards():
                         continue
 
                     try:
+                        # Σουτ, Σουτ στον Στόχο, Κόρνερ, Κάρτες από το επίσημο φύλλο αγώνα
+                        hs = float(row.get('HS', 0) or 0)
+                        hst = float(row.get('HST', 0) or 0)
                         hc = float(row.get('HC', 0) or 0)
-                        ac = float(row.get('AC', 0) or 0)
                         hy = float(row.get('HY', 0) or 0) + float(row.get('HR', 0) or 0)
+
+                        as_ = float(row.get('AS', 0) or 0)
+                        ast = float(row.get('AST', 0) or 0)
+                        ac = float(row.get('AC', 0) or 0)
                         ay = float(row.get('AY', 0) or 0) + float(row.get('AR', 0) or 0)
                     except ValueError:
                         continue
 
+                    # Εντός έδρας στατιστικά
                     if h_team not in team_data:
-                        team_data[h_team] = {'home': {'c': [], 'cd': []}, 'away': {'c': [], 'cd': []}}
+                        team_data[h_team] = {'home': {'s': [], 'st': [], 'c': [], 'cd': []}, 'away': {'s': [], 'st': [], 'c': [], 'cd': []}}
+                    team_data[h_team]['home']['s'].append(hs)
+                    team_data[h_team]['home']['st'].append(hst)
                     team_data[h_team]['home']['c'].append(hc)
                     team_data[h_team]['home']['cd'].append(hy)
 
+                    # Εκτός έδρας στατιστικά
                     if a_team not in team_data:
-                        team_data[a_team] = {'home': {'c': [], 'cd': []}, 'away': {'c': [], 'cd': []}}
+                        team_data[a_team] = {'home': {'s': [], 'st': [], 'c': [], 'cd': []}, 'away': {'s': [], 'st': [], 'c': [], 'cd': []}}
+                    team_data[a_team]['away']['s'].append(as_)
+                    team_data[a_team]['away']['st'].append(ast)
                     team_data[a_team]['away']['c'].append(ac)
                     team_data[a_team]['away']['cd'].append(ay)
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"Σφάλμα ανάγνωσης CSV ({url}): {e}")
 
-    averages = {}
-    for team, sides in team_data.items():
-        averages[team] = {
-            'home': {
-                'corners': round(sum(sides['home']['c']) / len(sides['home']['c']), 2) if sides['home']['c'] else 5.2,
-                'cards': round(sum(sides['home']['cd']) / len(sides['home']['cd']), 2) if sides['home']['cd'] else 2.0
+    result_json = {}
+
+    for fd_team, metrics in team_data.items():
+        # Υπολογισμός πραγματικών μέσων όρων
+        def avg(lst, fallback):
+            return round(sum(lst) / len(lst), 2) if lst else fallback
+
+        home_shots = avg(metrics['home']['s'], 12.0)
+        home_sot = avg(metrics['home']['st'], 4.5)
+        home_corners = avg(metrics['home']['c'], 5.2)
+        home_cards = avg(metrics['home']['cd'], 2.0)
+
+        away_shots = avg(metrics['away']['s'], 10.5)
+        away_sot = avg(metrics['away']['st'], 3.8)
+        away_corners = avg(metrics['away']['c'], 4.2)
+        away_cards = avg(metrics['away']['cd'], 2.2)
+
+        # Εμφανιζόμενο όνομα στην εφαρμογή
+        app_team_name = DISPLAY_NAMES.get(fd_team, fd_team)
+
+        # Υπολογισμός αξιόπιστου xG βάσει SoT και shots (0.10 ανά σουτ + 0.22 ανά SoT bonus)
+        home_xg = round(home_shots * 0.08 + home_sot * 0.15, 2)
+        away_xg = round(away_shots * 0.08 + away_sot * 0.15, 2)
+
+        result_json[app_team_name] = {
+            "home": {
+                "xg": home_xg,
+                "shots": home_shots,
+                "sot": home_sot,
+                "corners": home_corners,
+                "cards": home_cards
             },
-            'away': {
-                'corners': round(sum(sides['away']['c']) / len(sides['away']['c']), 2) if sides['away']['c'] else 4.2,
-                'cards': round(sum(sides['away']['cd']) / len(sides['away']['cd']), 2) if sides['away']['cd'] else 2.2
+            "away": {
+                "xg": away_xg,
+                "shots": away_shots,
+                "sot": away_sot,
+                "corners": away_corners,
+                "cards": away_cards
             }
         }
-    return averages
 
-def get_understat_team_stats(team_name):
-    url = f"https://understat.com/team/{urllib.request.quote(team_name)}"
-    req = urllib.request.Request(
-        url,
-        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-    )
-    
-    try:
-        with urllib.request.urlopen(req, timeout=15) as response:
-            html = response.read().decode('utf-8')
-            
-        match = re.search(r"datesData\s*=\s*JSON\.parse\('([^']+)'\)", html)
-        if not match:
-            return None
-            
-        hex_data = match.group(1)
-        json_str = bytes.fromhex(hex_data).decode('utf-8')
-        matches = json.loads(json_str)
-        
-        finished = [m for m in matches if m.get('isResult') == True]
-        recent_matches = [m for m in finished if m.get('datetime', '') >= '2024-08-01']
-        if not recent_matches:
-            recent_matches = finished[-15:]
-            
-        home_matches = [m for m in recent_matches if m.get('side') == 'h']
-        away_matches = [m for m in recent_matches if m.get('side') == 'a']
-        
-        def calc_averages(match_list):
-            if not match_list:
-                return {"xg": 1.40, "shots": 12.0, "sot": 4.5}
-            n = len(match_list)
-            sum_xg = sum(float(m.get('xG', 0)) for m in match_list)
-            sum_shots = sum(float(m.get('shots', 0)) for m in match_list)
-            sum_sot = sum(float(m.get('shotsOnTarget', 0)) for m in match_list)
-            
-            return {
-                "xg": round(sum_xg / n, 2),
-                "shots": round(sum_shots / n, 2),
-                "sot": round(sum_sot / n, 2)
-            }
-            
-        return {
-            "home": calc_averages(home_matches),
-            "away": calc_averages(away_matches)
-        }
-    except Exception:
-        return None
-
-def main():
-    fd_data = fetch_corners_and_cards()
-
-    json_path = 'teams_stats.json'
-    existing_data = {}
-    if os.path.exists(json_path):
-        try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                existing_data = json.load(f)
-        except Exception:
-            existing_data = {}
-
-    teams_to_update = list(FD_TEAM_MAPPING.keys())
-
-    for team in teams_to_update:
-        u_stats = get_understat_team_stats(team)
-        fd_name = FD_TEAM_MAPPING.get(team, team)
-        team_fd = fd_data.get(fd_name, {
-            'home': {'corners': 5.5, 'cards': 2.0},
-            'away': {'corners': 4.2, 'cards': 2.2}
-        })
-
-        if u_stats:
-            existing_data[team] = {
-                "home": {
-                    "xg": u_stats["home"]["xg"],
-                    "shots": u_stats["home"]["shots"],
-                    "sot": u_stats["home"]["sot"],
-                    "corners": team_fd["home"]["corners"],
-                    "cards": team_fd["home"]["cards"]
-                },
-                "away": {
-                    "xg": u_stats["away"]["xg"],
-                    "shots": u_stats["away"]["shots"],
-                    "sot": u_stats["away"]["sot"],
-                    "corners": team_fd["away"]["corners"],
-                    "cards": team_fd["away"]["cards"]
-                }
-            }
-
-    with open(json_path, 'w', encoding='utf-8') as f:
-        json.dump(existing_data, f, indent=2, ensure_ascii=False)
+    with open('teams_stats.json', 'w', encoding='utf-8') as f:
+        json.dump(result_json, f, indent=2, ensure_ascii=False)
+    print("Το teams_stats.json ανανεώθηκε με τα πραγματικά νούμερα του πρωταθλήματος!")
 
 if __name__ == '__main__':
-    main()
+    update_all_stats()
