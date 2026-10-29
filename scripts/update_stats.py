@@ -100,23 +100,22 @@ def get_understat_team_stats(team_name):
         json_str = bytes.fromhex(hex_data).decode('utf-8')
         matches = json.loads(json_str)
         
-        home_matches = [
-            m for m in matches 
-            if m.get('side') == 'h' 
-            and m.get('isResult') == True 
-            and (str(m.get('season', '')) == TARGET_SEASON or m.get('datetime', '') >= f"{TARGET_SEASON}-08-01")
-        ]
+        # Κρατάμε τα ολοκληρωμένα ματς
+        # Ταξινομούμε ανά ημερομηνία για να πάρουμε τα πιο πρόσφατα
+        finished = [m for m in matches if m.get('isResult') == True]
         
-        away_matches = [
-            m for m in matches 
-            if m.get('side') == 'a' 
-            and m.get('isResult') == True 
-            and (str(m.get('season', '')) == TARGET_SEASON or m.get('datetime', '') >= f"{TARGET_SEASON}-08-01")
-        ]
+        # Αν υπάρχουν ματς με ημερομηνία πρόσφατη (τρέχουσα περίοδος)
+        # Κρατάμε μόνο αυτά
+        recent_matches = [m for m in finished if m.get('datetime', '') >= '2024-08-01']
+        if not recent_matches:
+            recent_matches = finished[-15:] # fallback στα τελευταία ματς
+            
+        home_matches = [m for m in recent_matches if m.get('side') == 'h']
+        away_matches = [m for m in recent_matches if m.get('side') == 'a']
         
         def calc_averages(match_list):
             if not match_list:
-                return {"xg": 1.40, "shots": 13.0, "sot": 4.5}
+                return {"xg": 1.40, "shots": 12.0, "sot": 4.5}
             n = len(match_list)
             sum_xg = sum(float(m.get('xG', 0)) for m in match_list)
             sum_shots = sum(float(m.get('shots', 0)) for m in match_list)
@@ -132,7 +131,8 @@ def get_understat_team_stats(team_name):
             "home": calc_averages(home_matches),
             "away": calc_averages(away_matches)
         }
-    except Exception:
+    except Exception as e:
+        print(f"Error fetching {team_name}: {e}")
         return None
 
 def main():
