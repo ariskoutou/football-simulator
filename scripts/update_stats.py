@@ -5,7 +5,6 @@ import os
 import re
 import urllib.request
 
-# Ορισμός τρέχουσας σεζόν (2024 για τη σεζόν 2024-2025)
 TARGET_SEASON = "2024"
 
 FD_TEAM_MAPPING = {
@@ -67,7 +66,7 @@ def fetch_corners_and_cards():
                     team_data[a_team]['away']['c'].append(ac)
                     team_data[a_team]['away']['cd'].append(ay)
         except Exception as e:
-            print(f"Σφάλμα CSV ({url}): {e}")
+            pass
 
     averages = {}
     for team, sides in team_data.items():
@@ -87,7 +86,7 @@ def get_understat_team_stats(team_name):
     url = f"https://understat.com/team/{urllib.request.quote(team_name)}"
     req = urllib.request.Request(
         url,
-        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
     )
     
     try:
@@ -96,14 +95,12 @@ def get_understat_team_stats(team_name):
             
         match = re.search(r"datesData\s*=\s*JSON\.parse\('([^']+)'\)", html)
         if not match:
-            print(f"Δεν βρέθηκαν datesData για {team_name}")
             return None
             
         hex_data = match.group(1)
         json_str = bytes.fromhex(hex_data).decode('utf-8')
         matches = json.loads(json_str)
         
-        # Μόνο τελειωμένα ματς της τρέχουσας σεζόν
         home_matches = [
             m for m in matches 
             if m.get('side') == 'h' 
@@ -136,5 +133,51 @@ def get_understat_team_stats(team_name):
             "home": calc_averages(home_matches),
             "away": calc_averages(away_matches)
         }
-    except Exception as e:
-        print(
+    except Exception:
+        return None
+
+def main():
+    fd_data = fetch_corners_and_cards()
+
+    json_path = 'teams_stats.json'
+    existing_data = {}
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+        except Exception:
+            existing_data = {}
+
+    teams_to_update = list(FD_TEAM_MAPPING.keys())
+
+    for team in teams_to_update:
+        u_stats = get_understat_team_stats(team)
+        fd_name = FD_TEAM_MAPPING.get(team, team)
+        team_fd = fd_data.get(fd_name, {
+            'home': {'corners': 5.5, 'cards': 2.0},
+            'away': {'corners': 4.2, 'cards': 2.2}
+        })
+
+        if u_stats:
+            existing_data[team] = {
+                "home": {
+                    "xg": u_stats["home"]["xg"],
+                    "shots": u_stats["home"]["shots"],
+                    "sot": u_stats["home"]["sot"],
+                    "corners": team_fd["home"]["corners"],
+                    "cards": team_fd["home"]["cards"]
+                },
+                "away": {
+                    "xg": u_stats["away"]["xg"],
+                    "shots": u_stats["away"]["shots"],
+                    "sot": u_stats["away"]["sot"],
+                    "corners": team_fd["away"]["corners"],
+                    "cards": team_fd["away"]["cards"]
+                }
+            }
+
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump(existing_data, f, indent=2, ensure_ascii=False)
+
+if __name__ == '__main__':
+    main()
